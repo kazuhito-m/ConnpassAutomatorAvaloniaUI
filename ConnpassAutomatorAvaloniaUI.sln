@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31424.327
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConnpassAutomator", "ConnpassAutomator\ConnpassAutomator.csproj", "{D3733890-A158-4826-A0D5-785C26E7F1CB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D3733890-A158-4826-A0D5-785C26E7F1CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3733890-A158-4826-A0D5-785C26E7F1CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3733890-A158-4826-A0D5-785C26E7F1CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3733890-A158-4826-A0D5-785C26E7F1CB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {123220F8-A4DB-4897-A1B5-EA39A538BCB7}
+	EndGlobalSection
+EndGlobal
