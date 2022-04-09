@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ConnpassAutomatorAvaloniaUI.ViewModels
+namespace Presentation.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {

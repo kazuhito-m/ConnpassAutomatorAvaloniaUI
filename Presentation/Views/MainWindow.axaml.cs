@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace ConnpassAutomatorAvaloniaUI.Views
+namespace Presentation.Views
 {
     public partial class MainWindow : Window
     {

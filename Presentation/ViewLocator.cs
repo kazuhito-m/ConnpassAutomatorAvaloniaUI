@@ -1,9 +1,9 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using ConnpassAutomatorAvaloniaUI.ViewModels;
+using Presentation.ViewModels;
 using System;
 
-namespace ConnpassAutomatorAvaloniaUI
+namespace Presentation
 {
     public class ViewLocator : IDataTemplate
     {
