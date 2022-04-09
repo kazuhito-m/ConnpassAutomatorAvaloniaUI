@@ -42,7 +42,6 @@ namespace Presentation.ViewModels
         public async void IncrimentVolNo()
         {
             await ThisSystemMessageBox.Show("Test", ",‘I‘ð‚Í:" + selectedProfileIndex);
-            repository.Save(Profile());
         }
 
         public int SelectedProfileIndex
@@ -50,5 +49,8 @@ namespace Presentation.ViewModels
             get => selectedProfileIndex;
             set => this.RaiseAndSetIfChanged(ref selectedProfileIndex, value);
         }
+
+        internal void Save()
+            => repository.Save(Profile());
     }
 }
