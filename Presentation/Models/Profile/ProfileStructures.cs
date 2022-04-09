@@ -19,7 +19,15 @@ namespace Presentation.Models.Profile
                         {
                             EventTitle = "未設定(追加してください)"
                         }
+                    },
+                    new Project()
+                    {
+                        CopySource = new CopySource()
+                        {
+                            EventTitle = "未設定2(ちゃんとしたのを追加してください)"
+                        }
                     }
+
                 },
                 Credential = new Credential()
             };

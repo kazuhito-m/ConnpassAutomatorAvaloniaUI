@@ -11,7 +11,7 @@ namespace Presentation.ViewModels
         private readonly ProfileRepository repository = new ProfileRepository();
 
         private ConnpassWillbeRenamed? profile = null;
-        private Changeset currentChangeset = new Changeset();
+        private Project currentProject = new Project();
 
         private int selectedProfileIndex = 0;
 
@@ -22,20 +22,37 @@ namespace Presentation.ViewModels
                 .ToList();
         }
 
+        public string SearchEventTitle
+        {
+            get => currentProject.CopySource.EventTitle;
+            set => currentProject.CopySource.EventTitle = value;
+        }
+
+        public string EventTitle
+        {
+            get => currentProject.Changeset.EventTitle;
+            set => currentProject.Changeset.EventTitle = value;
+        }
+
         public string SubTitle
         {
-            get => currentChangeset.SubEventTitle;
-            set => currentChangeset.SubEventTitle = value;
+            get => currentProject.Changeset.SubEventTitle;
+            set => currentProject.Changeset.SubEventTitle = value;
+        }
+
+        public string EventDescription
+        {
+            get => currentProject.Changeset.Explanation;
+            set => currentProject.Changeset.Explanation = value;
         }
 
         private ConnpassWillbeRenamed Profile()
         {
-            if (profile == null)
-            {
-                profile = repository.Load();
-                SelectedProfileIndex = 0;
-                currentChangeset = profile.Projects[SelectedProfileIndex].Changeset;
-            }
+            if (profile != null) return profile;
+
+            profile = repository.Load();
+            SelectedProfileIndex = 0;
+            currentProject = profile.Projects[SelectedProfileIndex];
             return profile;
         }
 

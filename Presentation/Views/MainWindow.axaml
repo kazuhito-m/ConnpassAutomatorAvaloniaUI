@@ -49,7 +49,8 @@
 
 					<StackPanel>
 						<TextBlock Text="コピー元イベントタイトル(前方一致)" />
-						<TextBox AcceptsReturn="True" TextWrapping="Wrap" Height="54" Width="300"/>
+						<TextBox AcceptsReturn="True" TextWrapping="Wrap" Height="54" Width="300"
+								  Text="{Binding SearchEventTitle}"/>
 					</StackPanel>
 
 				</StackPanel>
@@ -57,7 +58,8 @@
 				<StackPanel>
 					<TextBlock Text="タイトル" />
 					<StackPanel Orientation="Horizontal" Spacing="8" >
-						<TextBox AcceptsReturn="True" TextWrapping="Wrap" Height="54" Width="300"/>
+						<TextBox AcceptsReturn="True" TextWrapping="Wrap" Height="54" Width="300"
+									Text="{Binding EventTitle}"/>
 						<Button Command="{Binding IncrimentVolNo}">+1</Button>
 					</StackPanel>
 				</StackPanel>
@@ -89,7 +91,8 @@
 				<StackPanel Orientation="Horizontal" Spacing="8">
 					<StackPanel>
 						<TextBlock Text="イベントの説明" />
-						<TextBox AcceptsReturn="True" TextWrapping="Wrap" Height="120" Width="300"/>
+						<TextBox AcceptsReturn="True" TextWrapping="Wrap" Height="120" Width="300"
+								 Text="{Binding EventDescription}"/>
 					</StackPanel>
 
 				</StackPanel>
