@@ -8,7 +8,7 @@ namespace Presentation.Alert
 {
     static class ThisSystemMessageBox
     {
-        internal static async Task Show(string title, string message, Window window, ButtonEnum button = ButtonEnum.Ok, Icon icon = Icon.Info)
+        internal static async Task Show(string title, string message, Window? window = null, ButtonEnum button = ButtonEnum.Ok, Icon icon = Icon.Info)
         {
             var param = new MessageBoxStandardParams
             {
@@ -20,7 +20,8 @@ namespace Presentation.Alert
                 Icon = icon
             };
             var messageBox = MessageBoxManager.GetMessageBoxStandardWindow(param);
-            await messageBox.ShowDialog(window);
+            if (window == null) await messageBox.Show();
+            else await messageBox.ShowDialog(window);
         }
     }
 }

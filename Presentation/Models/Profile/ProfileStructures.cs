@@ -2,17 +2,17 @@
 
 namespace Presentation.Models.Profile
 {
-    internal class ConnpassWillbeRenamed
+    public class ConnpassWillbeRenamed
     {
-        internal ConnpassWillbeRenamed() { }
-        internal Credential Credential { get; set; } = new();
-        internal IList<Project> Projects { get; set; } = new List<Project>();
+        public ConnpassWillbeRenamed() { }
+        public Credential Credential { get; set; } = new();
+        public IList<Project> Projects { get; set; } = new List<Project>();
 
-        internal static ConnpassWillbeRenamed Default()
+        public static ConnpassWillbeRenamed Default()
         {
-            var result = new ConnpassWillbeRenamed()
+            return new ConnpassWillbeRenamed()
             {
-                Projects = new List<Project>() { 
+                Projects = new List<Project>() {
                     new Project()
                     {
                         CopySource = new CopySource()
@@ -23,39 +23,38 @@ namespace Presentation.Models.Profile
                 },
                 Credential = new Credential()
             };
-            return result;
         }
     }
 
-    internal class Credential
+    public class Credential
     {
-        internal Credential() { }
-        internal string UserName { get; set; } = "";
-        internal string Password { get; set; } = "";
+        public Credential() { }
+        public string UserName { get; set; } = "";
+        public string Password { get; set; } = "";
     }
 
-    internal class Project
+    public class Project
     {
-        internal Project() { }
-        internal CopySource CopySource { get; set; } = new CopySource();
-        internal Changeset Changeset { get; set; } = new Changeset();
+        public Project() { }
+        public CopySource CopySource { get; set; } = new CopySource();
+        public Changeset Changeset { get; set; } = new Changeset();
     }
 
-    internal class CopySource
+    public class CopySource
     {
-        internal CopySource() { }
-        internal string EventTitle { get; set; } = "";
+        public CopySource() { }
+        public string EventTitle { get; set; } = "";
     }
 
-    internal class Changeset
+    public class Changeset
     {
-        internal Changeset() { }
-        internal string EventTitle { get; set; } = "";
-        internal string SubEventTitle { get; set; } = "";
-        internal string StartDate { get; set; } = "";
-        internal string StartTime { get; set; } = "";
-        internal string EndDate { get; set; } = "";
-        internal string EndTime { get; set; } = "";
-        internal string Explanation { get; set; } = "";
+        public Changeset() { }
+        public string EventTitle { get; set; } = "";
+        public string SubEventTitle { get; set; } = "";
+        public string StartDate { get; set; } = "";
+        public string StartTime { get; set; } = "";
+        public string EndDate { get; set; } = "";
+        public string EndTime { get; set; } = "";
+        public string Explanation { get; set; } = "";
     }
 }
