@@ -1,6 +1,7 @@
 using Presentation.Alert;
 using Presentation.Models.Profile;
 using ReactiveUI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,26 +25,26 @@ namespace Presentation.ViewModels
 
         public string SearchEventTitle
         {
-            get => currentProject.CopySource.EventTitle;
-            set => currentProject.CopySource.EventTitle = value;
+            get => CurrentProject.CopySource.EventTitle;
+            set => CurrentProject.CopySource.EventTitle = value;
         }
 
         public string EventTitle
         {
-            get => currentProject.Changeset.EventTitle;
-            set => currentProject.Changeset.EventTitle = value;
+            get => CurrentProject.Changeset.EventTitle;
+            set => CurrentProject.Changeset.EventTitle = value;
         }
 
         public string SubTitle
         {
-            get => currentProject.Changeset.SubEventTitle;
-            set => currentProject.Changeset.SubEventTitle = value;
+            get => CurrentProject.Changeset.SubEventTitle;
+            set => CurrentProject.Changeset.SubEventTitle = value;
         }
 
         public string EventDescription
         {
-            get => currentProject.Changeset.Explanation;
-            set => currentProject.Changeset.Explanation = value;
+            get => CurrentProject.Changeset.Explanation;
+            set => CurrentProject.Changeset.Explanation = value;
         }
 
         private ConnpassWillbeRenamed Profile()
@@ -52,7 +53,7 @@ namespace Presentation.ViewModels
 
             profile = repository.Load();
             SelectedProfileIndex = 0;
-            currentProject = profile.Projects[SelectedProfileIndex];
+            CurrentProject = profile.Projects[SelectedProfileIndex];
             return profile;
         }
 
@@ -64,7 +65,27 @@ namespace Presentation.ViewModels
         public int SelectedProfileIndex
         {
             get => selectedProfileIndex;
-            set => this.RaiseAndSetIfChanged(ref selectedProfileIndex, value);
+            set
+            {
+                this.RaiseAndSetIfChanged(ref selectedProfileIndex, value);
+                CurrentProject = Profile().Projects[value];
+                ReflectProperty();
+            }
+        }
+
+        // FIXME 以下は苦肉の策。プロパティを反応させるため、あえてもう一度入れている。
+        private void ReflectProperty()
+        {
+            SearchEventTitle = CurrentProject.CopySource.EventTitle;
+            EventTitle = CurrentProject.Changeset.EventTitle;
+            SubTitle = CurrentProject.Changeset.SubEventTitle;
+            EventDescription = CurrentProject.Changeset.Explanation;
+        }
+
+        private Project CurrentProject
+        {
+            get => currentProject;
+            set => this.RaiseAndSetIfChanged(ref currentProject, value);
         }
 
         internal void Save()
