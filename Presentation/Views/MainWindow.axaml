@@ -6,12 +6,110 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Presentation.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
-        Title="ConnpassAutomatorAvaloniaUI">
+        Title="ConnpassAutomatorAvaloniaUI"
+		SizeToContent="Manual"
+		Width="800" Height="600"
+		WindowStartupLocation="CenterScreen"
+		CanResize="false">
 
-    <Design.DataContext>
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
+	<Design.DataContext>
+		<vm:MainWindowViewModel/>
+	</Design.DataContext>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+	<Window.Styles>
+		<Style Selector="TextBox">
+			<Setter Property="FontFamily" Value="Meiryo"/>
+		</Style>
+		<Style Selector="StackPanel">
+			<Setter Property="Orientation" Value="Vertical"/>
+			<Setter Property="HorizontalAlignment" Value="Left"/>
+		</Style>
+	</Window.Styles>
+
+	<StackPanel Orientation="Vertical"
+				Margin="0,16,0,0"
+				HorizontalAlignment="Center"
+				Spacing="8">
+
+		<StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="8">
+			<TextBlock Text="イベントプロファイル" />
+			<ComboBox SelectedIndex="0" Width="455">
+				<ComboBoxItem>Inline Items</ComboBoxItem>
+				<ComboBoxItem>Inline Item 2</ComboBoxItem>
+				<ComboBoxItem>Inline Item 3</ComboBoxItem>
+				<ComboBoxItem>Inline Item 4</ComboBoxItem>
+			</ComboBox>
+		</StackPanel>
+
+		<Border
+			BorderBrush="Black"
+			BorderThickness="1"
+			CornerRadius="3"
+			Padding="8">
+
+			<StackPanel Spacing="8">
+
+				<StackPanel Orientation="Horizontal" Spacing="8">
+
+					<StackPanel>
+						<TextBlock Text="コピー元イベントタイトル(前方一致)" />
+						<TextBox AcceptsReturn="True" TextWrapping="Wrap" Height="54" Width="300"/>
+					</StackPanel>
+
+					<StackPanel HorizontalAlignment="Right">
+						<StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+							<TextBlock Text="ユーザ"/>
+							<Border BorderBrush="Black" BorderThickness="1" Padding="1">
+								<TextBlock Text="ユーザ" Width="180"/>
+							</Border>
+						</StackPanel>
+						<Button Click="OnButtonClick">ログイン情報の変更</Button>
+					</StackPanel>
+
+				</StackPanel>
+
+				<StackPanel>
+					<TextBlock Text="タイトル" />
+					<StackPanel Orientation="Horizontal" Spacing="8" >
+						<TextBox AcceptsReturn="True" TextWrapping="Wrap" Height="54" Width="300"/>
+						<Button  Click="OnButtonClick">+1</Button>
+					</StackPanel>
+				</StackPanel>
+
+				<StackPanel>
+					<TextBlock Text="サブタイトル" />
+					<TextBox Width="300"/>
+				</StackPanel>
+
+				<StackPanel>
+					<StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="8">
+						<TextBlock Text="開始時間" />
+						<Button  Click="OnButtonClick">+7Day</Button>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal" Spacing="8">
+						<DatePicker/>
+						<TimePicker/>
+					</StackPanel>
+				</StackPanel>
+
+				<StackPanel>
+					<TextBlock Text="終了時間" />
+					<StackPanel Orientation="Horizontal" Spacing="8">
+						<DatePicker/>
+						<TimePicker/>
+					</StackPanel>
+				</StackPanel>
+
+				<StackPanel>
+					<TextBlock Text="イベントの説明" />
+					<TextBox AcceptsReturn="True" TextWrapping="Wrap" Height="120" Width="300"/>
+				</StackPanel>
+
+			</StackPanel>
+
+		</Border>
+
+
+	</StackPanel>
 
 </Window>
