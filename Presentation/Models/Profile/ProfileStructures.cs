@@ -7,6 +7,24 @@ namespace Presentation.Models.Profile
         internal ConnpassWillbeRenamed() { }
         internal Credential Credential { get; set; } = new();
         internal IList<Project> Projects { get; set; } = new List<Project>();
+
+        internal static ConnpassWillbeRenamed Default()
+        {
+            var result = new ConnpassWillbeRenamed()
+            {
+                Projects = new List<Project>() { 
+                    new Project()
+                    {
+                        CopySource = new CopySource()
+                        {
+                            EventTitle = "未設定(追加してください)"
+                        }
+                    }
+                },
+                Credential = new Credential()
+            };
+            return result;
+        }
     }
 
     internal class Credential
