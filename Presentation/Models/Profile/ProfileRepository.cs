@@ -1,4 +1,9 @@
-﻿namespace Presentation.Models.Profile
+﻿using Microsoft.Extensions.Configuration;
+using System.Diagnostics;
+using System.IO;
+
+
+namespace Presentation.Models.Profile
 {
     class ProfileRepository
     {
