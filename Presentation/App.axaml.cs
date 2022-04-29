@@ -3,15 +3,16 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Presentation.ViewModels;
 using Presentation.Views;
+using System;
 
 namespace Presentation
 {
     public partial class App : Application
     {
+        private readonly MainWindowViewModel mainWindowViewModel;
+
         public override void Initialize()
-        {
-            AvaloniaXamlLoader.Load(this);
-        }
+            => AvaloniaXamlLoader.Load(this);
 
         public override void OnFrameworkInitializationCompleted()
         {
@@ -19,11 +20,17 @@ namespace Presentation
             {
                 desktop.MainWindow = new MainWindow
                 {
-                    DataContext = new MainWindowViewModel(),
+                    DataContext = mainWindowViewModel,
                 };
             }
 
             base.OnFrameworkInitializationCompleted();
         }
+
+        public App() : this(new MainWindowViewModel())
+            => throw new InvalidOperationException();
+
+        public App(MainWindowViewModel mainWindowViewModel)
+            => this.mainWindowViewModel = mainWindowViewModel;
     }
 }

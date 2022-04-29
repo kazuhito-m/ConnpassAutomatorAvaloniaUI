@@ -27,7 +27,6 @@ namespace Presentation.Views
         private void OnClosed(object? sender, EventArgs args)
         {
             ViewModel?.Save();
-            Environment.Exit(0);    // FIXME AvaloniaUIの終了でGenericHostの終了を呼べないので苦肉の策。こんな力技ではなくライフサイクルで解決する手段で修正する。
         }
 
         private MainWindowViewModel? ViewModel

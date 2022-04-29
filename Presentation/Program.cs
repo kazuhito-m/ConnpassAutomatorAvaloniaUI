@@ -1,46 +1,22 @@
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.ReactiveUI;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Presentation.ViewModels;
 using System;
-using System.Threading.Tasks;
 
 namespace Presentation
 {
     class Program
     {
-        private static Task? backgroundHostTask;
-        private static Task<int>? uiTask;
-
         [STAThread]
-        public static async Task<int> Main(string[] args)
+        public static void Main(string[] args)
         {
-            backgroundHostTask = CreateHostBuilder(args).Build().RunAsync();
-
-            uiTask = Task.Run(() =>
-            {
-                var app = BuildAvaloniaApp();
-                return app.StartWithClassicDesktopLifetime(args, ShutdownMode.OnExplicitShutdown);
-            });
-
-
-            await backgroundHostTask;
-            var lifetime = Application.Current.ApplicationLifetime as IControlledApplicationLifetime;
-            lifetime?.Shutdown(0);
-            var result = await uiTask;
-            return result;
+            CreateHostBuilder(args)
+                 .Build()
+                 .Run();
         }
 
-        // Avalonia configuration, don't remove; also used by visual designer.
-        public static AppBuilder BuildAvaloniaApp()
-            => AppBuilder.Configure<App>()
-                .UsePlatformDetect()
-                .LogToTrace()
-                .UseReactiveUI();
-
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
+        private static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((hostContext, config) =>
                 {
@@ -48,6 +24,8 @@ namespace Presentation
                 })
                 .ConfigureServices((hostContext, services) =>
                 {
+                    services.AddSingleton<MainWindowViewModel>();
+                    services.AddHostedService<AvaloniaAdapterHostedService>();
                 });
     }
 }
