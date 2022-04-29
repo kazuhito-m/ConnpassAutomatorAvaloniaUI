@@ -4,8 +4,6 @@ using Presentation.Alert;
 using Presentation.Models.Profile;
 using Presentation.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace Presentation.Views
 {
@@ -26,10 +24,13 @@ namespace Presentation.Views
             await ThisSystemMessageBox.Show("タイトル", "メッセージボックス出せるよ！", this);
         }
 
-        private void OnClosed(object? sender, EventArgs args) 
-            => ViewModel?.Save();
+        private void OnClosed(object? sender, EventArgs args)
+        {
+            ViewModel?.Save();
+            Environment.Exit(0);    // FIXME AvaloniaUIの終了でGenericHostの終了を呼べないので苦肉の策。こんな力技ではなくライフサイクルで解決する手段で修正する。
+        }
 
-        private MainWindowViewModel? ViewModel 
+        private MainWindowViewModel? ViewModel
             => DataContext as MainWindowViewModel;
     }
 }
