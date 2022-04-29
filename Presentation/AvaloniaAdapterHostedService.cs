@@ -27,7 +27,7 @@ namespace Presentation
             return Task.CompletedTask;
         }
 
-        private AppBuilder BuildAvaloniaApp()
+        internal AppBuilder BuildAvaloniaApp()
         {
             return AppBuilder.Configure(() => new App(mainWindowViewModel))
                 .UsePlatformDetect()

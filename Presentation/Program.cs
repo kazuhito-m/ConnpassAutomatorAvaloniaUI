@@ -1,3 +1,4 @@
+using Avalonia;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -27,5 +28,16 @@ namespace Presentation
                     services.AddSingleton<MainWindowViewModel>();
                     services.AddHostedService<AvaloniaAdapterHostedService>();
                 });
+
+        /// <summary>
+        /// AvaloniaUIのデザイナのためのメソッド。
+        /// <p/>
+        /// ウィザードで自動生成され、デザイナが「Programクラスにこのメソッドがあること」を期待している。
+        /// が、本プロジェクトでは、
+        /// </summary>
+        /// <returns></returns>
+        public static AppBuilder BuildAvaloniaApp()
+            => new AvaloniaAdapterHostedService(null, new MainWindowViewModel())
+                .BuildAvaloniaApp();
     }
 }
