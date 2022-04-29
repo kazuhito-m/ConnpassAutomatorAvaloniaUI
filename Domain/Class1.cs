@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Domain
+namespace ConnpassAutomator.Domain
 {
     public class Class1
     {

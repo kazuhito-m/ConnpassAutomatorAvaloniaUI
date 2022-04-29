@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Application
+namespace ConnpassAutomator.Application
 {
     public class Class1
     {
