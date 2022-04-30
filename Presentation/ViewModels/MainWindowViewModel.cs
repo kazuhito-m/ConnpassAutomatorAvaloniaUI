@@ -1,6 +1,7 @@
 using Presentation.Alert;
 using Presentation.Models.Profile;
 using ReactiveUI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,6 +9,15 @@ namespace Presentation.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
+        private string copyBaseEventTitle = "";
+        private string eventTitle = "";
+        private string subTitle = "";
+        private DateTimeOffset? startDate = new DateTimeOffset(DateTime.Now);
+        private TimeSpan? startTime = DateTime.Now.Subtract(new DateTime(1970, 1, 9, 0, 0, 00));
+        private DateTimeOffset? endDate = new DateTimeOffset(DateTime.Now);
+        private TimeSpan? endTime = DateTime.Now.Subtract(new DateTime(1970, 1, 9, 0, 0, 00));
+        private string eventDescription = "";
+
         private readonly ProfileRepository repository = new ProfileRepository();
 
         private ConnpassWillbeRenamed? profile = null;
@@ -22,28 +32,56 @@ namespace Presentation.ViewModels
                 .ToList();
         }
 
-        public string SearchEventTitle
+        public string CopyBaseEventTitle
         {
-            get => CurrentProject.CopySource.EventTitle;
-            set => CurrentProject.CopySource.EventTitle = value;
+            get => copyBaseEventTitle;
+            set => this.RaiseAndSetIfChanged(ref copyBaseEventTitle, value);
         }
 
         public string EventTitle
         {
-            get => CurrentProject.Changeset.EventTitle;
-            set => CurrentProject.Changeset.EventTitle = value;
+            get => eventTitle;
+            set => this.RaiseAndSetIfChanged(ref eventTitle, value);
         }
 
         public string SubTitle
         {
-            get => CurrentProject.Changeset.SubEventTitle;
-            set => CurrentProject.Changeset.SubEventTitle = value;
+            get => subTitle;
+            set => this.RaiseAndSetIfChanged(ref subTitle, value);
+        }
+
+        public DateTimeOffset? StartDate
+        {
+            get => startDate;
+            set => this.RaiseAndSetIfChanged(ref startDate, value);
+
+        }
+
+        public TimeSpan? StartTime
+        {
+            get => startTime;
+            set => this.RaiseAndSetIfChanged(ref startTime, value);
+
+        }
+
+        public DateTimeOffset? EndDate
+        {
+            get => endDate;
+            set => this.RaiseAndSetIfChanged(ref endDate, value);
+
+        }
+
+        public TimeSpan? EndTime
+        {
+            get => endTime;
+            set => this.RaiseAndSetIfChanged(ref endTime, value);
+
         }
 
         public string EventDescription
         {
-            get => CurrentProject.Changeset.Explanation;
-            set => CurrentProject.Changeset.Explanation = value;
+            get => eventDescription;
+            set => this.RaiseAndSetIfChanged(ref eventDescription, value);
         }
 
         private ConnpassWillbeRenamed Profile()
@@ -75,7 +113,7 @@ namespace Presentation.ViewModels
         // FIXME 以下は苦肉の策。プロパティを反応させるため、あえてもう一度入れている。
         private void ReflectProperty()
         {
-            SearchEventTitle = CurrentProject.CopySource.EventTitle;
+            CopyBaseEventTitle = CurrentProject.CopySource.EventTitle;
             EventTitle = CurrentProject.Changeset.EventTitle;
             SubTitle = CurrentProject.Changeset.SubEventTitle;
             EventDescription = CurrentProject.Changeset.Explanation;
