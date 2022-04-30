@@ -12,11 +12,11 @@ namespace Presentation.ViewModels
         private string copyBaseEventTitle = "";
         private string eventTitle = "";
         private string subTitle = "";
+        private string eventDescription = "";
         private DateTimeOffset? startDate;
         private TimeSpan? startTime;
         private DateTimeOffset? endDate;
         private TimeSpan? endTime;
-        private string eventDescription = "";
 
         private int selectedProfileIndex = 0;
 
@@ -76,6 +76,11 @@ namespace Presentation.ViewModels
             project.Changeset.EventTitle = EventTitle;
             project.Changeset.SubEventTitle = SubTitle;
             project.Changeset.Explanation = EventDescription;
+
+            project.Changeset.StartDate = PickerValueConverter.ToDateStringOf(StartDate);
+            project.Changeset.StartTime = PickerValueConverter.ToTimeStringOf(StartTime);
+            project.Changeset.EndDate = PickerValueConverter.ToDateStringOf(EndDate);
+            project.Changeset.EndTime = PickerValueConverter.ToTimeStringOf(EndTime);
         }
 
         private void SetInputValueOf(Project project)
@@ -84,6 +89,11 @@ namespace Presentation.ViewModels
             EventTitle = project.Changeset.EventTitle;
             SubTitle = project.Changeset.SubEventTitle;
             EventDescription = project.Changeset.Explanation;
+
+            StartDate = PickerValueConverter.ToDatePickerValueOf(project.Changeset.StartDate);
+            StartTime = PickerValueConverter.ToTimePickerValueOf(project.Changeset.StartTime);
+            EndDate = PickerValueConverter.ToDatePickerValueOf(project.Changeset.EndDate);
+            EndTime = PickerValueConverter.ToTimePickerValueOf(project.Changeset.EndTime);
         }
 
         internal void Save()
@@ -95,7 +105,7 @@ namespace Presentation.ViewModels
         private ConnpassWillbeRenamed LoadProfile()
             => repository.Load();
 
-        // Simple Properties
+        // Simple Get/Set Only Properties
 
         public string CopyBaseEventTitle
         {
