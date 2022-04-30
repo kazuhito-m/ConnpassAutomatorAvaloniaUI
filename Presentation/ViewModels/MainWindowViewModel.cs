@@ -103,28 +103,24 @@ namespace Presentation.ViewModels
         {
             get => startDate;
             set => this.RaiseAndSetIfChanged(ref startDate, value);
-
         }
 
         public TimeSpan? StartTime
         {
             get => startTime;
             set => this.RaiseAndSetIfChanged(ref startTime, value);
-
         }
 
         public DateTimeOffset? EndDate
         {
             get => endDate;
             set => this.RaiseAndSetIfChanged(ref endDate, value);
-
         }
 
         public TimeSpan? EndTime
         {
             get => endTime;
             set => this.RaiseAndSetIfChanged(ref endTime, value);
-
         }
 
         public string EventDescription
