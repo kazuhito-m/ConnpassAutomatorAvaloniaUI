@@ -3,9 +3,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
 
-namespace Presentation.Models.Profile
+namespace ConnpassAutomator.Domain.Model.Profile
 {
-    class ProfileRepository
+    public class ProfileRepository
     {
         private readonly string PROFILE_FILE_NAME = "profile.json";
 

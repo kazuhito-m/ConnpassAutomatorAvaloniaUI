@@ -1,5 +1,5 @@
+using ConnpassAutomator.Domain.Model.Profile;
 using Presentation.Alert;
-using Presentation.Models.Profile;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;

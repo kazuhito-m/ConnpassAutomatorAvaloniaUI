@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Presentation.Models.Profile
+namespace ConnpassAutomator.Domain.Model.Profile
 {
     public class ConnpassWillbeRenamed
     {

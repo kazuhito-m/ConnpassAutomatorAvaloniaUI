@@ -1,4 +1,4 @@
-﻿using Presentation.Models.Profile;
+﻿using ConnpassAutomator.Domain.Model.Profile;
 
 namespace Presentation.ViewModels
 {
