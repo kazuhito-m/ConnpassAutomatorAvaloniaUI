@@ -16,17 +16,9 @@ namespace ConnpassAutomator.Domain.Model.Profile
                     {
                         CopySource = new CopySource()
                         {
-                            EventTitle = "未設定(追加してください)"
-                        }
-                    },
-                    new Project()
-                    {
-                        CopySource = new CopySource()
-                        {
-                            EventTitle = "未設定2(ちゃんとしたのを追加してください)"
+                            EventTitle = "未設定(入力・変更してください)"
                         }
                     }
-
                 },
                 Credential = new Credential()
             };
