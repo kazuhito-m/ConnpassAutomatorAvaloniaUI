@@ -1,4 +1,7 @@
 using Avalonia;
+using ConnpassAutomator.Application.Service;
+using ConnpassAutomator.Domain.Model.Profile;
+using ConnpassAutomator.Infrastructure.Datasource.Profile;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,6 +28,9 @@ namespace Presentation
                 })
                 .ConfigureServices((hostContext, services) =>
                 {
+                    services.AddSingleton<IProfileRepository, ProfileDatasource>();
+                    services.AddSingleton<ProfileService>();
+
                     services.AddSingleton<MainWindowViewModel>();
                     services.AddHostedService<AvaloniaAdapterHostedService>();
                 });
