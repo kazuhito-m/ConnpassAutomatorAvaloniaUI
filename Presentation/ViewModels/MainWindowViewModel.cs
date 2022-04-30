@@ -22,6 +22,11 @@ namespace Presentation.ViewModels
 
         private readonly ProfileRepository repository = new ProfileRepository();
 
+        public async void IncrimentVolNo()
+        {
+            await ThisSystemMessageBox.Show("Test", ",‘I‘ð‚Í:" + selectedProfileIndex);
+        }
+
         public List<string> FindProjectNames
         {
             get
@@ -142,11 +147,6 @@ namespace Presentation.ViewModels
         {
             get => eventDescription;
             set => this.RaiseAndSetIfChanged(ref eventDescription, value);
-        }
-
-        public async void IncrimentVolNo()
-        {
-            await ThisSystemMessageBox.Show("Test", ",‘I‘ð‚Í:" + selectedProfileIndex);
         }
     }
 }
