@@ -40,7 +40,7 @@ namespace Presentation.ViewModels
                 {
                     selectedProfileIndex = 0;
                     var selectedProject = profile.Projects[selectedProfileIndex];
-                    SetInputValueOf(selectedProject);
+                    this.ReflectFrom(selectedProject);
                 }
 
                 return names;
@@ -55,7 +55,7 @@ namespace Presentation.ViewModels
                 var profile = SaveInputOfNowSelectedProject();
 
                 var selectedProject = profile.Projects[value];
-                SetInputValueOf(selectedProject);
+                this.ReflectFrom(selectedProject);
 
                 this.RaiseAndSetIfChanged(ref selectedProfileIndex, value);
             }
@@ -65,35 +65,9 @@ namespace Presentation.ViewModels
         {
             var profile = LoadProfile();
             var lastSelectedProject = profile.Projects[selectedProfileIndex];
-            GetInputValueTo(lastSelectedProject);
+            this.ReflectTo(lastSelectedProject);
             SaveProfile(profile);
             return profile;
-        }
-
-        private void GetInputValueTo(Project project)
-        {
-            project.CopySource.EventTitle = CopyBaseEventTitle;
-            project.Changeset.EventTitle = EventTitle;
-            project.Changeset.SubEventTitle = SubTitle;
-            project.Changeset.Explanation = EventDescription;
-
-            project.Changeset.StartDate = PickerValueConverter.ToDateStringOf(StartDate);
-            project.Changeset.StartTime = PickerValueConverter.ToTimeStringOf(StartTime);
-            project.Changeset.EndDate = PickerValueConverter.ToDateStringOf(EndDate);
-            project.Changeset.EndTime = PickerValueConverter.ToTimeStringOf(EndTime);
-        }
-
-        private void SetInputValueOf(Project project)
-        {
-            CopyBaseEventTitle = project.CopySource.EventTitle;
-            EventTitle = project.Changeset.EventTitle;
-            SubTitle = project.Changeset.SubEventTitle;
-            EventDescription = project.Changeset.Explanation;
-
-            StartDate = PickerValueConverter.ToDatePickerValueOf(project.Changeset.StartDate);
-            StartTime = PickerValueConverter.ToTimePickerValueOf(project.Changeset.StartTime);
-            EndDate = PickerValueConverter.ToDatePickerValueOf(project.Changeset.EndDate);
-            EndTime = PickerValueConverter.ToTimePickerValueOf(project.Changeset.EndTime);
         }
 
         internal void Save()
