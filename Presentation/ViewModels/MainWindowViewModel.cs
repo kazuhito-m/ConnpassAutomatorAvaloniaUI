@@ -61,7 +61,7 @@ namespace Presentation.ViewModels
             }
         }
 
-        private ConnpassWillbeRenamed SaveInputOfNowSelectedProject()
+        private ConnpassProfile SaveInputOfNowSelectedProject()
         {
             var profile = LoadProfile();
             var lastSelectedProject = profile.Projects[selectedProfileIndex];
@@ -73,10 +73,10 @@ namespace Presentation.ViewModels
         internal void Save()
             => SaveInputOfNowSelectedProject();
 
-        private void SaveProfile(ConnpassWillbeRenamed profile)
+        private void SaveProfile(ConnpassProfile profile)
             => repository.Save(profile);
 
-        private ConnpassWillbeRenamed LoadProfile()
+        private ConnpassProfile LoadProfile()
             => repository.Load();
 
         // Simple Get/Set Only Properties

@@ -9,26 +9,26 @@ namespace ConnpassAutomator.Domain.Model.Profile
     {
         private readonly string PROFILE_FILE_NAME = "profile.json";
 
-        public void Save(ConnpassWillbeRenamed profile)
+        public void Save(ConnpassProfile profile)
         {
             var json = JsonSerializer.Serialize(profile);
             Debug.WriteLine(json);
             File.WriteAllText(ProfilePath(), json);
         }
 
-        public ConnpassWillbeRenamed Load()
+        public ConnpassProfile Load()
         {
             try
             {
                 var json = File.ReadAllText(ProfilePath());
-                var result = JsonSerializer.Deserialize<ConnpassWillbeRenamed>(json);
+                var result = JsonSerializer.Deserialize<ConnpassProfile>(json);
                 return result == null
-                    ? ConnpassWillbeRenamed.Default()
+                    ? ConnpassProfile.Default()
                     : result;
             }
             catch (Exception e)
             {
-                return ConnpassWillbeRenamed.Default();
+                return ConnpassProfile.Default();
             }
         }
 
