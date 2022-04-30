@@ -12,25 +12,85 @@ namespace Presentation.ViewModels
         private string copyBaseEventTitle = "";
         private string eventTitle = "";
         private string subTitle = "";
-        private DateTimeOffset? startDate = new DateTimeOffset(DateTime.Now);
-        private TimeSpan? startTime = DateTime.Now.Subtract(new DateTime(1970, 1, 9, 0, 0, 00));
-        private DateTimeOffset? endDate = new DateTimeOffset(DateTime.Now);
-        private TimeSpan? endTime = DateTime.Now.Subtract(new DateTime(1970, 1, 9, 0, 0, 00));
+        private DateTimeOffset? startDate;
+        private TimeSpan? startTime;
+        private DateTimeOffset? endDate;
+        private TimeSpan? endTime;
         private string eventDescription = "";
-
-        private readonly ProfileRepository repository = new ProfileRepository();
-
-        private ConnpassWillbeRenamed? profile = null;
-        private Project currentProject = new Project();
 
         private int selectedProfileIndex = 0;
 
+        private readonly ProfileRepository repository = new ProfileRepository();
+
         public List<string> FindProjectNames
         {
-            get => Profile().Projects
-                .Select(project => project.CopySource.EventTitle)
-                .ToList();
+            get
+            {
+                var profile = LoadProfile();
+                var names = profile.Projects
+                    .Select(project => project.CopySource.EventTitle)
+                    .ToList();
+
+                if (names.Count > 0)
+                {
+                    selectedProfileIndex = 0;
+                    var selectedProject = profile.Projects[selectedProfileIndex];
+                    SetInputValueOf(selectedProject);
+                }
+
+                return names;
+            }
         }
+
+        public int SelectedProfileIndex
+        {
+            get => selectedProfileIndex;
+            set
+            {
+                var profile = SaveInputOfNowSelectedProject();
+
+                var selectedProject = profile.Projects[value];
+                SetInputValueOf(selectedProject);
+
+                this.RaiseAndSetIfChanged(ref selectedProfileIndex, value);
+            }
+        }
+
+        private ConnpassWillbeRenamed SaveInputOfNowSelectedProject()
+        {
+            var profile = LoadProfile();
+            var lastSelectedProject = profile.Projects[selectedProfileIndex];
+            GetInputValueTo(lastSelectedProject);
+            SaveProfile(profile);
+            return profile;
+        }
+
+        private void GetInputValueTo(Project project)
+        {
+            project.CopySource.EventTitle = CopyBaseEventTitle;
+            project.Changeset.EventTitle = EventTitle;
+            project.Changeset.SubEventTitle = SubTitle;
+            project.Changeset.Explanation = EventDescription;
+        }
+
+        private void SetInputValueOf(Project project)
+        {
+            CopyBaseEventTitle = project.CopySource.EventTitle;
+            EventTitle = project.Changeset.EventTitle;
+            SubTitle = project.Changeset.SubEventTitle;
+            EventDescription = project.Changeset.Explanation;
+        }
+
+        internal void Save()
+            => SaveInputOfNowSelectedProject();
+
+        private void SaveProfile(ConnpassWillbeRenamed profile)
+            => repository.Save(profile);
+
+        private ConnpassWillbeRenamed LoadProfile()
+            => repository.Load();
+
+        // Simple Properties
 
         public string CopyBaseEventTitle
         {
@@ -84,48 +144,9 @@ namespace Presentation.ViewModels
             set => this.RaiseAndSetIfChanged(ref eventDescription, value);
         }
 
-        private ConnpassWillbeRenamed Profile()
-        {
-            if (profile != null) return profile;
-
-            profile = repository.Load();
-            SelectedProfileIndex = 0;
-            CurrentProject = profile.Projects[SelectedProfileIndex];
-            return profile;
-        }
-
         public async void IncrimentVolNo()
         {
             await ThisSystemMessageBox.Show("Test", ",選択は:" + selectedProfileIndex);
         }
-
-        public int SelectedProfileIndex
-        {
-            get => selectedProfileIndex;
-            set
-            {
-                this.RaiseAndSetIfChanged(ref selectedProfileIndex, value);
-                CurrentProject = Profile().Projects[value];
-                ReflectProperty();
-            }
-        }
-
-        // FIXME 以下は苦肉の策。プロパティを反応させるため、あえてもう一度入れている。
-        private void ReflectProperty()
-        {
-            CopyBaseEventTitle = CurrentProject.CopySource.EventTitle;
-            EventTitle = CurrentProject.Changeset.EventTitle;
-            SubTitle = CurrentProject.Changeset.SubEventTitle;
-            EventDescription = CurrentProject.Changeset.Explanation;
-        }
-
-        private Project CurrentProject
-        {
-            get => currentProject;
-            set => this.RaiseAndSetIfChanged(ref currentProject, value);
-        }
-
-        internal void Save()
-            => repository.Save(Profile());
     }
 }
