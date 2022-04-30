@@ -1,7 +1,6 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Presentation.Alert;
-using Presentation.Models.Profile;
 using Presentation.ViewModels;
 using System;
 
@@ -9,13 +8,9 @@ namespace Presentation.Views
 {
     public partial class MainWindow : Window
     {
-        private readonly ProfileRepository profileRepository;
-
         public MainWindow()
         {
             InitializeComponent();
-
-            profileRepository = new ProfileRepository();
 
             Closed += OnClosed;
         }
@@ -25,9 +20,7 @@ namespace Presentation.Views
         }
 
         private void OnClosed(object? sender, EventArgs args)
-        {
-            ViewModel?.Save();
-        }
+            => ViewModel?.Save();
 
         private MainWindowViewModel? ViewModel
             => DataContext as MainWindowViewModel;

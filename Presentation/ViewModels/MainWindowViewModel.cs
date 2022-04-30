@@ -1,3 +1,4 @@
+using ConnpassAutomator.Application.Service;
 using ConnpassAutomator.Domain.Model.Profile;
 using Presentation.Alert;
 using ReactiveUI;
@@ -20,7 +21,7 @@ namespace Presentation.ViewModels
 
         private int selectedProfileIndex = 0;
 
-        private readonly ProfileRepository repository = new ProfileRepository();
+        private readonly ProfileService profileService;
 
         public async void IncrimentVolNo()
         {
@@ -31,7 +32,7 @@ namespace Presentation.ViewModels
         {
             get
             {
-                var profile = LoadProfile();
+                var profile = profileService.Load();
                 var names = profile.Projects
                     .Select(project => project.CopySource.EventTitle)
                     .ToList();
@@ -63,21 +64,15 @@ namespace Presentation.ViewModels
 
         private ConnpassProfile SaveInputOfNowSelectedProject()
         {
-            var profile = LoadProfile();
+            var profile = profileService.Load();
             var lastSelectedProject = profile.Projects[selectedProfileIndex];
             this.ReflectTo(lastSelectedProject);
-            SaveProfile(profile);
+            profileService.Save(profile);
             return profile;
         }
 
         internal void Save()
             => SaveInputOfNowSelectedProject();
-
-        private void SaveProfile(ConnpassProfile profile)
-            => repository.Save(profile);
-
-        private ConnpassProfile LoadProfile()
-            => repository.Load();
 
         // Simple Get/Set Only Properties
 
@@ -128,5 +123,8 @@ namespace Presentation.ViewModels
             get => eventDescription;
             set => this.RaiseAndSetIfChanged(ref eventDescription, value);
         }
+
+        public MainWindowViewModel(ProfileService profileService)
+            => this.profileService = profileService;
     }
 }

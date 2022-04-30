@@ -27,7 +27,7 @@ namespace Presentation
             base.OnFrameworkInitializationCompleted();
         }
 
-        public App() : this(new MainWindowViewModel())
+        public App() : this(null)
             => throw new InvalidOperationException();
 
         public App(MainWindowViewModel mainWindowViewModel)
