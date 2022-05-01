@@ -33,8 +33,10 @@
 
 		<StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="8">
 			<TextBlock Text="イベントプロファイル" />
-			<ComboBox Items="{Binding FindProjectNames}" SelectedIndex="{Binding SelectedProfileIndex}" Width="455">
+			<ComboBox Items="{Binding FindProjectNames}" SelectedIndex="{Binding SelectedProfileIndex}" Width="380">
 			</ComboBox>
+			<Button Command="{Binding IncrimentVolNo}">－</Button>
+			<Button Command="{Binding IncrimentVolNo}">＋</Button>
 		</StackPanel>
 
 		<Border
