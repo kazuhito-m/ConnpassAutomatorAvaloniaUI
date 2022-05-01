@@ -10,9 +10,10 @@ namespace ConnpassAutomator.Infrastructure.Datasource.Selenium
 {
     public class SeleniumDatasource : ISeleniumRepository
     {
-        public WebDriver CreateWebDriver()
+        public WebDriver CreateWebDriver(int commandTimeoutSeconds)
         {
-            return new ChromeDriver(ThisAssemblyDirectoryPath(), new ChromeOptions(), TimeSpan.FromSeconds(120));
+            var driverLibDirPath = AppDomain.CurrentDomain.BaseDirectory;
+            return new ChromeDriver(driverLibDirPath, new ChromeOptions(), TimeSpan.FromSeconds(commandTimeoutSeconds));
         }
 
         private static string ThisAssemblyDirectoryPath()

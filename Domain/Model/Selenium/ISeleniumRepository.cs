@@ -5,7 +5,7 @@ namespace ConnpassAutomator.Domain.Model.Selenium
 {
     public interface ISeleniumRepository
     {
-        WebDriver CreateWebDriver();
+        WebDriver CreateWebDriver(int commandTimeoutSeconds);
         WebDriverWait CreateWait(WebDriver driver, int waitSeconds, int pollingIntervalSeconds);
     }
 }

@@ -13,7 +13,7 @@ namespace ConnpassAutomator.Application.Service
 
         public CreateEventResultState CreateEvent(Project project, Credential credential)
         {
-            var driver = seleniumRepository.CreateWebDriver();
+            var driver = seleniumRepository.CreateWebDriver(120);
             driver.Url = "https://connpass.com/editmanage/";
 
             var driverWait = seleniumRepository.CreateWait(driver, 60, 1);
