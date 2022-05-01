@@ -23,6 +23,7 @@ namespace ConnpassAutomator.Application.Service
             var result = DoPageOperation(driver, driverWait, project, credential);
 
             driver.Close();
+            driver.Dispose();
 
             return result;
         }

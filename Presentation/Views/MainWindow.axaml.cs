@@ -24,8 +24,18 @@ namespace Presentation.Views
 
             var result = ViewModel().CreateEvent();
 
-            if (result == CreateEventResultState.成功) await ShowSuccessMessage("Connpassイベントの作成が完了しました。");
-            else await ShowWarnMessage("Connpassイベントの作成に失敗しました。");
+            switch (result)
+            {
+                case CreateEventResultState.成功:
+                    await ShowSuccessMessage("Connpassイベントの作成が完了しました。");
+                    break;
+                case CreateEventResultState.ログイン失敗 :
+                    await ShowWarnMessage("Connpassへのログインに失敗しました。ログイン情報を確認してください。");
+                    break;
+                default:
+                    await ShowWarnMessage("Connpassイベントの作成に失敗しました。");
+                    break;
+            }
         }
 
         private async Task<bool> Validation()
