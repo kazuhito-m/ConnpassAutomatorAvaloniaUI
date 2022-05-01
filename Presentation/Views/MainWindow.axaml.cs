@@ -15,6 +15,7 @@ namespace Presentation.Views
         public MainWindow()
         {
             InitializeComponent();
+
             Closed += OnClosed;
         }
 
@@ -72,7 +73,6 @@ namespace Presentation.Views
 
             return await ShowEditCredentialWindow();
         }
-
 
         private async Task ShowCreateEventResultMessage(CreateEventResultState result)
         {
