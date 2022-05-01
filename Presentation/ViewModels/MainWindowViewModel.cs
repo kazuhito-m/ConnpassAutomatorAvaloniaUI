@@ -1,5 +1,5 @@
-using Avalonia.Interactivity;
 using ConnpassAutomator.Application.Service;
+using ConnpassAutomator.Domain.Model.Connpass.Event;
 using ConnpassAutomator.Domain.Model.Profile;
 using Presentation.Alert;
 using ReactiveUI;
@@ -24,6 +24,14 @@ namespace Presentation.ViewModels
 
         private readonly ConnpassEventService connpassEventService;
         private readonly ProfileService profileService;
+
+        internal CreateEventResultState CreateEvent()
+        {
+            var profile = SaveInputOfNowSelectedProject();
+            var selectedProject = profile.Projects[selectedProfileIndex];
+
+            return connpassEventService.CreateEvent(selectedProject, profile.Credential);
+        }
 
         public async void IncrimentVolNo()
         {

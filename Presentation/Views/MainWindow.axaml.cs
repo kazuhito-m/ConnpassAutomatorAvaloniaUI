@@ -1,6 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
+using ConnpassAutomator.Domain.Model.Connpass.Event;
 using Presentation.Alert;
 using Presentation.ViewModels;
 using System;
@@ -20,7 +21,11 @@ namespace Presentation.Views
         private async void OnClickCreateEvent(object sender, RoutedEventArgs e)
         {
             if (!await Validation()) return;
-            await ThisSystemMessageBox.Show("タイトル", "umakuikanai", this);
+
+            var result = ViewModel().CreateEvent();
+
+            if (result == CreateEventResultState.成功) await ShowSuccessMessage("Connpassイベントの作成が完了しました。");
+            else await ShowWarnMessage("Connpassイベントの作成に失敗しました。");
         }
 
         private async Task<bool> Validation()
@@ -65,8 +70,7 @@ namespace Presentation.Views
 
         private async Task<bool> ValidationCredential()
         {
-            var vm = ViewModel;
-            if (vm == null) return false;
+            var vm = ViewModel();
             if (vm.UserName.Trim().Length > 0
                 && vm.Password.Trim().Length > 0) return true;
             await ShowWarnMessage("ログイン情報が未設定です。");
@@ -77,15 +81,22 @@ namespace Presentation.Views
         private async Task ShowWarnMessage(string message)
             => await ThisSystemMessageBox.Show(Title, message, this, icon: MessageBox.Avalonia.Enums.Icon.Warning);
 
+        private async Task ShowSuccessMessage(string message)
+            => await ThisSystemMessageBox.Show(Title, message, this, icon: MessageBox.Avalonia.Enums.Icon.Success);
+
         private async void OnButtonClick(object sender, RoutedEventArgs e)
         {
             await ThisSystemMessageBox.Show("タイトル", "メッセージボックス出せるよ！", this);
         }
 
         private void OnClosed(object? sender, EventArgs args)
-            => ViewModel?.Save();
+            => ViewModel().Save();
 
-        private MainWindowViewModel? ViewModel
-            => DataContext as MainWindowViewModel;
+        private MainWindowViewModel ViewModel()
+        {
+            if (DataContext == null || !(DataContext is MainWindowViewModel))
+                throw new InvalidOperationException();
+            return (MainWindowViewModel)DataContext;
+        }
     }
 }
