@@ -20,7 +20,6 @@ namespace Presentation.Views
         private async void OnClickCreateEvent(object sender, RoutedEventArgs e)
         {
             if (!await Validation()) return;
-            if (!await ValidationCredential()) return;
             await ThisSystemMessageBox.Show("タイトル", "umakuikanai", this);
         }
 
@@ -34,7 +33,8 @@ namespace Presentation.Views
             if (await IsBlackInput("endDate", "終了日付")) return false;
             if (await IsBlackInput("endTime", "開始時刻")) return false;
             if (await IsBlackInput("eventDescription", "イベントの説明")) return false;
-            return true;
+
+            return await ValidationCredential();
         }
 
         private async Task<bool> IsBlackInput(string fieldName, string fieldCaption)
@@ -67,7 +67,7 @@ namespace Presentation.Views
         {
             var vm = ViewModel;
             if (vm == null) return false;
-            if (vm.UserName.Trim().Length > 0 
+            if (vm.UserName.Trim().Length > 0
                 && vm.Password.Trim().Length > 0) return true;
             await ThisSystemMessageBox.Show(Title, "ログイン情報が未設定です。", this, icon: MessageBox.Avalonia.Enums.Icon.Warning);
             return false;
