@@ -3,6 +3,7 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
 using ConnpassAutomator.Domain.Model.Connpass.Event;
 using Presentation.Alert;
+using Presentation.Extension.Avalonia;
 using Presentation.ViewModels;
 using System;
 using System.Threading.Tasks;
@@ -14,7 +15,6 @@ namespace Presentation.Views
         public MainWindow()
         {
             InitializeComponent();
-
             Closed += OnClosed;
         }
 
@@ -54,22 +54,7 @@ namespace Presentation.Views
         private async Task<bool> IsBlackInput(string fieldName, string fieldCaption)
         {
             var input = this.FindControl<TemplatedControl>(fieldName);
-            if (input is TextBox)
-            {
-                var textBox = (TextBox)input;
-                var value = textBox!.Text.Trim();
-                if (value.Length > 0) return false;
-            }
-            if (input is DatePicker)
-            {
-                var datePicker = (DatePicker)input;
-                if (datePicker.SelectedDate != null) return false;
-            }
-            if (input is TimePicker)
-            {
-                var timePicker = (TimePicker)input;
-                if (timePicker.SelectedTime != null) return false;
-            }
+            if (!input.IsBlank()) return false;
 
             await ShowWarnMessage($"{fieldCaption} Çì¸óÕÇµÇƒÇ≠ÇæÇ≥Ç¢ÅB");
             input!.Focus();
