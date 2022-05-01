@@ -105,7 +105,7 @@
 				<Button Click="OnButtonClick">ログイン情報の変更</Button>
 				<TextBlock Text="ユーザ"/>
 				<Border BorderBrush="Black" BorderThickness="1" Padding="3" Height="25">
-					<TextBlock Text="ユーザ" Width="180"/>
+					<TextBlock Text="{Binding UserName}" Width="180"/>
 				</Border>
 			</StackPanel>
 			<StackPanel HorizontalAlignment="Right">

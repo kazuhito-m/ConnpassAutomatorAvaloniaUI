@@ -44,7 +44,7 @@ namespace Presentation
         /// </summary>
         /// <returns></returns>
         public static AppBuilder BuildAvaloniaApp()
-            => new AvaloniaAdapterHostedService(null, new MainWindowViewModel(null, null))
+            => new AvaloniaAdapterHostedService(null, new MainWindowViewModel())
                 .BuildAvaloniaApp();
     }
 }

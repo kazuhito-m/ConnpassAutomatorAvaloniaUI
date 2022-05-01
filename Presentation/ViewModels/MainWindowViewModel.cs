@@ -43,6 +43,7 @@ namespace Presentation.ViewModels
                     selectedProfileIndex = 0;
                     var selectedProject = profile.Projects[selectedProfileIndex];
                     this.ReflectFrom(selectedProject);
+                    UserName = profile.Credential.UserName;
                 }
 
                 return names;
@@ -124,6 +125,10 @@ namespace Presentation.ViewModels
             get => eventDescription;
             set => this.RaiseAndSetIfChanged(ref eventDescription, value);
         }
+
+        public string UserName { get; set; } = "";
+
+        public MainWindowViewModel() : this(null, null) { }
 
         public MainWindowViewModel(ConnpassEventService connpassEventService, ProfileService profileService)
         {
