@@ -34,6 +34,12 @@ namespace Presentation.ViewModels
             vm.EndTime = PickerValueConverter.ToTimePickerValueOf(changeSet.EndTime);
         }
 
+        internal static void ReflectTo(this MainWindowViewModel vm, Credential credential)
+        {
+            credential.UserName = vm.UserName;
+            credential.Password = vm.Password;
+        }
+
         internal static void ReflectFrom(this MainWindowViewModel vm, Credential credential)
         {
             vm.UserName = credential.UserName;

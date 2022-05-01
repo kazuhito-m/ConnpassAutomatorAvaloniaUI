@@ -104,6 +104,30 @@ namespace Presentation.Views
             }
         }
 
+        private async void OnClickEditCredential(object sender, RoutedEventArgs e)
+        {
+            var button = (Button)sender;
+            button.IsEnabled = false;
+
+            await ShowEditCredentialWindow();
+
+            button.IsEnabled = true;
+        }
+
+        private async Task ShowEditCredentialWindow()
+        {
+            var vm = CredentialEditWindowViewModel.Of(ViewModel());
+            var window = new CredentialEditWindow() { DataContext = vm };
+
+            var commited = await window.ShowDialog<bool>(this);
+
+            if (commited) return;
+
+            var myVm = ViewModel();
+            vm.ReflectTo(myVm);
+            myVm.Save();
+        }
+
         private async Task ShowWarnMessage(string message)
             => await ThisSystemMessageBox.Show(Title, message, this, icon: MessageBox.Avalonia.Enums.Icon.Warning);
 

@@ -109,7 +109,7 @@
 
 		<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Spacing="48">
 			<StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
-				<Button Click="OnButtonClick">ログイン情報の変更</Button>
+				<Button x:Name="EditCredentialButton" Click="OnClickEditCredential">ログイン情報の変更</Button>
 				<TextBlock Text="ユーザ"/>
 				<Border BorderBrush="Black" BorderThickness="1" Padding="3" Height="25">
 					<TextBlock Text="{Binding UserName}" Width="180"/>

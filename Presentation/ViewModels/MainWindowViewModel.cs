@@ -27,7 +27,7 @@ namespace Presentation.ViewModels
 
         internal CreateEventResultState CreateEvent()
         {
-            var profile = SaveInputOfNowSelectedProject();
+            var profile = SaveNowInputState();
             var selectedProject = profile.Projects[selectedProfileIndex];
 
             return connpassEventService.CreateEvent(selectedProject, profile.Credential);
@@ -64,7 +64,7 @@ namespace Presentation.ViewModels
             get => selectedProfileIndex;
             set
             {
-                var profile = SaveInputOfNowSelectedProject();
+                var profile = SaveNowInputState();
 
                 var selectedProject = profile.Projects[value];
                 this.ReflectFrom(selectedProject);
@@ -73,17 +73,18 @@ namespace Presentation.ViewModels
             }
         }
 
-        private ConnpassProfile SaveInputOfNowSelectedProject()
+        private ConnpassProfile SaveNowInputState()
         {
             var profile = profileService.Load();
             var lastSelectedProject = profile.Projects[selectedProfileIndex];
             this.ReflectTo(lastSelectedProject);
+            this.ReflectTo(profile.Credential);
             profileService.Save(profile);
             return profile;
         }
 
         internal void Save()
-            => SaveInputOfNowSelectedProject();
+            => SaveNowInputState();
 
         // Simple Get/Set Only Properties
 
