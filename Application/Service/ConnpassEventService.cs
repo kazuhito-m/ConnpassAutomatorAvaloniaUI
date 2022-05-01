@@ -63,10 +63,8 @@ namespace ConnpassAutomator.Application.Service
             var elements = driver.FindElements(By.ClassName("event_list"));
             foreach (var element in elements)
             {
-                //label_status_event mb_5 close 終了
                 var status = element.FindElement(By.ClassName("label_status_event")).Text;
 
-                //C#によるマルチコアのための非同期/並列処理プログラミング Zoomオンライン読書会 vol.5;
                 var title = element.FindElement(By.CssSelector(".title > a")).Text;
                 if (title.Contains(project.CopySource.EventTitle) && status == "終了")
                 {
