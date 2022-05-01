@@ -30,6 +30,7 @@ namespace Presentation
                 {
                     services.AddSingleton<IProfileRepository, ProfileDatasource>();
                     services.AddSingleton<ProfileService>();
+                    services.AddSingleton<ConnpassEventService>();
 
                     services.AddSingleton<MainWindowViewModel>();
                     services.AddHostedService<AvaloniaAdapterHostedService>();
@@ -43,7 +44,7 @@ namespace Presentation
         /// </summary>
         /// <returns></returns>
         public static AppBuilder BuildAvaloniaApp()
-            => new AvaloniaAdapterHostedService(null, new MainWindowViewModel(null))
+            => new AvaloniaAdapterHostedService(null, new MainWindowViewModel(null, null))
                 .BuildAvaloniaApp();
     }
 }

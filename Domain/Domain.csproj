@@ -5,4 +5,8 @@
 		<RootNamespace>ConnpassAutomator.Domain</RootNamespace>
 	</PropertyGroup>
 
+	<ItemGroup>
+	  <Folder Include="Model\Connpass\Event\" />
+	</ItemGroup>
+
 </Project>

@@ -21,6 +21,7 @@ namespace Presentation.ViewModels
 
         private int selectedProfileIndex = 0;
 
+        private readonly ConnpassEventService connpassEventService;
         private readonly ProfileService profileService;
 
         public async void IncrimentVolNo()
@@ -124,7 +125,10 @@ namespace Presentation.ViewModels
             set => this.RaiseAndSetIfChanged(ref eventDescription, value);
         }
 
-        public MainWindowViewModel(ProfileService profileService)
-            => this.profileService = profileService;
+        public MainWindowViewModel(ConnpassEventService connpassEventService, ProfileService profileService)
+        {
+            this.connpassEventService = connpassEventService;
+            this.profileService = profileService;
+        }
     }
 }
