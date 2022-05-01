@@ -3,6 +3,7 @@
     public enum CreateEventResultState
     {
         成功,
-        失敗
+        失敗,
+        ログイン失敗
     }
 }

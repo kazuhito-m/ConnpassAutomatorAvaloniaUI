@@ -1,8 +1,10 @@
-﻿using ConnpassAutomator.Domain.Model.Connpass.Event;
+﻿using ConnpassAutomator.Domain.Model.Connpass;
+using ConnpassAutomator.Domain.Model.Connpass.Event;
 using ConnpassAutomator.Domain.Model.Profile;
 using ConnpassAutomator.Domain.Model.Selenium;
 using OpenQA.Selenium;
 using System;
+using System.Diagnostics;
 using System.Threading;
 
 namespace ConnpassAutomator.Application.Service
@@ -14,17 +16,49 @@ namespace ConnpassAutomator.Application.Service
         public CreateEventResultState CreateEvent(Project project, Credential credential)
         {
             var driver = seleniumRepository.CreateWebDriver(120);
-            driver.Url = "https://connpass.com/editmanage/";
+            driver.Url = ConnpassUrl.eventManagementUrl();
 
             var driverWait = seleniumRepository.CreateWait(driver, 60, 1);
 
-            driver.FindElement(By.Name("username")).SendKeys(credential.UserName);
-            driver.FindElement(By.Name("password")).SendKeys(credential.Password);
+            var result = DoPageOperation(driver, driverWait, project, credential);
+
+            driver.Close();
+
+            return result;
+        }
+
+        private CreateEventResultState DoPageOperation(WebDriver driver, OpenQA.Selenium.Support.UI.WebDriverWait driverWait, Project project, Credential credential)
+        {
+            if (!TryWith(() => Login(driver, credential)))
+                return CreateEventResultState.ログイン失敗;
+
+            if (!TryWith(() => FindBaseEventAndCopy(driver, project)))
+                return CreateEventResultState.失敗;
+
+            if (!TryWith(() => EditEvent(driver, project)))
+                return CreateEventResultState.失敗;
+
+            if (!TryWith(() => PublishImmediately(driver, driverWait)))
+                return CreateEventResultState.失敗;
+
+            return CreateEventResultState.成功;
+        }
+
+        private void Login(WebDriver driver, Credential credential)
+        {
+            driver.InputText("username", credential.UserName);
+            driver.InputText("password", credential.Password);
             driver.FindElement(By.Id("login_form")).Submit();
 
             //TODO:さて
             Thread.Sleep(1000);
 
+            var titleElem = driver.FindElement(By.ClassName("title_3_bg"));
+            if (titleElem.Text != "イベント管理") throw new Exception("ログイン後画面のタイトルが見つからない。");
+        }
+
+        private void FindBaseEventAndCopy(WebDriver driver, Project project)
+        {
             var elements = driver.FindElements(By.ClassName("event_list"));
             foreach (var element in elements)
             {
@@ -51,73 +85,20 @@ namespace ConnpassAutomator.Application.Service
             messageArea.Click();
             Thread.Sleep(400);
 
+            var titleElem = driver.FindElement(By.ClassName("public_status_area"));
+            if (titleElem.Text != "下書き中") throw new Exception("イベントコピー後の「下書き中」が見つからない。");
+        }
+
+        private  void EditEvent(WebDriver driver, Project project)
+        {
+            var changeset = project.Changeset;
+
             //タイトル編集
-            {
-                var fieldTitle = driver.FindElement(By.Id("FieldTitle"));
-                //編集モードに入る
-                fieldTitle.Click();
-                //中身の文字
-                var title = fieldTitle.FindElement(By.Name("title"));
-                //タイトルを書き換える
-                var titleValue = title.GetAttribute("value");
-                title.Clear();
-                title.SendKeys(project.Changeset.EventTitle);
-
-                var submit = fieldTitle.FindElement(By.CssSelector("button[type=submit]"));
-                submit.Click();
-            }
+            EditTextPartOfEvent(driver, project, "FieldTitle", "title", changeset.EventTitle);
             //サブタイトル編集
-            {
-                var fieldTitle = driver.FindElement(By.Id("FieldSubTitle"));
-                //編集モードに入る
-                fieldTitle.Click();
-                //中身の文字
-                var title = fieldTitle.FindElement(By.Name("sub_title"));
-                //タイトルを書き換える
-                var titleValue = title.GetAttribute("value");
-                title.Clear();
-                title.SendKeys(project.Changeset.SubEventTitle);
-
-                var submit = fieldTitle.FindElement(By.CssSelector("button[type=submit]"));
-                submit.Click();
-            }
+            EditTextPartOfEvent(driver, project, "FieldSubTitle", "sub_title", changeset.SubEventTitle);
             //開催日時編集
-            {
-                var fieldTitle = driver.FindElement(By.Id("EventDates"));
-                //編集モードに入る
-                fieldTitle.Click();
-
-                //ピッカーが出るのを消すために\tを投げる
-                //中身の文字
-                var startDate = fieldTitle.FindElement(By.Name("start_date"));
-                startDate.Clear();
-                startDate.SendKeys(project.Changeset.StartDate);
-                startDate.SendKeys("\t");
-
-                //中身の文字
-                var startTime = fieldTitle.FindElement(By.Name("start_time"));
-                startTime.Clear();
-                startTime.SendKeys(project.Changeset.StartTime);
-                startTime.SendKeys("\t");
-
-                var endDate = fieldTitle.FindElement(By.Name("end_date"));
-                endDate.Clear();
-                endDate.SendKeys(project.Changeset.EndDate);
-                endDate.SendKeys("\t");
-
-                //中身の文字
-                var endTime = fieldTitle.FindElement(By.Name("end_time"));
-                endTime.Clear();
-                endTime.SendKeys(project.Changeset.EndTime);
-                endTime.SendKeys("\t");
-
-                //ピッカーが保存ボタンに被ると、ボタンが押せなくなる
-                //ピッカーを消すために、開始日時をクリックする
-                startDate.Click();
-
-                var submit = fieldTitle.FindElement(By.CssSelector("button[type=submit]"));
-                submit.Click();
-            }
+            EditDateAndTimeOfEvent(driver, changeset);
             //イベント編集
             {
                 var fieldTitle = driver.FindElement(By.Id("FieldDescription"));
@@ -132,8 +113,54 @@ namespace ConnpassAutomator.Application.Service
                 var submit = fieldTitle.FindElement(By.CssSelector("button[type=submit]"));
                 submit.Click();
             }
+        }
 
+        private void EditDateAndTimeOfEvent(WebDriver driver, Changeset changeset)
+        {
+            var fieldTitle = driver.FindElement(By.Id("EventDates"));
+            //編集モードに入る
+            fieldTitle.Click();
 
+            IWebElement startDate = EditDateOrTimePickerOnEvent(fieldTitle, "start_date", changeset.StartDate);
+            EditDateOrTimePickerOnEvent(fieldTitle, "start_time", changeset.StartTime);
+            EditDateOrTimePickerOnEvent(fieldTitle, "end_date", changeset.EndDate);
+            EditDateOrTimePickerOnEvent(fieldTitle, "end_time", changeset.EndTime);
+
+            //ピッカーが保存ボタンに被ると、ボタンが押せなくなる
+            //ピッカーを消すために、開始日時をクリックする
+            startDate.Click();
+
+            var submit = fieldTitle.FindElement(By.CssSelector("button[type=submit]"));
+            submit.Click();
+        }
+
+        private IWebElement EditDateOrTimePickerOnEvent(IWebElement area, string pickerElementName, string text)
+        {
+            var picerArea = area.FindElement(By.Name(pickerElementName));
+            picerArea.Clear();
+            picerArea.SendKeys(text);
+            picerArea.SendKeys("\t");
+            return picerArea;
+        }
+
+        private void EditTextPartOfEvent(WebDriver driver, Project project, string titleElementId, string valueElementName, string text)
+        {
+            var fieldTitle = driver.FindElement(By.Id(titleElementId));
+            //編集モードに入る
+            fieldTitle.Click();
+            //中身の文字
+            var title = fieldTitle.FindElement(By.Name(valueElementName));
+            //書き換える
+            var titleValue = title.GetAttribute("value");
+            title.Clear();
+            title.SendKeys(text);
+
+            var submit = fieldTitle.FindElement(By.CssSelector("button[type=submit]"));
+            submit.Click();
+        }
+
+        private void PublishImmediately(WebDriver driver, OpenQA.Selenium.Support.UI.WebDriverWait driverWait)
+        {
             //即時公開する
             {
                 var publishEvent = driver.FindElement(By.ClassName("PublishEvent"));
@@ -146,16 +173,23 @@ namespace ConnpassAutomator.Application.Service
             //公開されたことを確認して終了
             System.Diagnostics.Debug.WriteLine(driver.Url);
             driverWait.Until((_) => driver.Url.Contains("published"));
+
             var mainTitle = driver.FindElement(By.ClassName("main_title_2"));
-            if (mainTitle.Text != "イベントを公開しました")
+            if (mainTitle.Text != "イベントを公開しました") throw new Exception("イベント公開後の「公開しました」文言が見つからない。");
+        }
+
+        private bool TryWith(Action action)
+        {
+            try
             {
-                throw new Exception("NG!!");
+                action.Invoke();
+                return true;
             }
-
-            driver.Close();
-            driver = null;
-
-            return CreateEventResultState.成功;
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                return false;
+            }
         }
 
         public ConnpassEventService(ISeleniumRepository seleniumRepository)
