@@ -70,6 +70,7 @@ namespace Presentation.Views
             if (vm.UserName.Trim().Length > 0
                 && vm.Password.Trim().Length > 0) return true;
             await ThisSystemMessageBox.Show(Title, "ログイン情報が未設定です。", this, icon: MessageBox.Avalonia.Enums.Icon.Warning);
+            // TODO ログイン情報を入力させる。
             return false;
         }
 
