@@ -53,8 +53,8 @@ namespace ConnpassAutomator.Application.Service
             //TODO:さて
             Thread.Sleep(1000);
 
-            var titleElem = driver.FindElement(By.ClassName("title_3_bg"));
-            if (titleElem.Text != "イベント管理") throw new Exception("ログイン後画面のタイトルが見つからない。");
+            if (driver.GetClassTextOf("title_3_bg") != "イベント管理")
+                throw new Exception("ログイン後画面のタイトルが見つからない。");
         }
 
         private void FindBaseEventAndCopy(WebDriver driver, Project project)
@@ -85,8 +85,8 @@ namespace ConnpassAutomator.Application.Service
             messageArea.Click();
             Thread.Sleep(400);
 
-            var titleElem = driver.FindElement(By.ClassName("public_status_area"));
-            if (titleElem.Text != "下書き中") throw new Exception("イベントコピー後の「下書き中」が見つからない。");
+            if (driver.GetClassTextOf("public_status_area") != "下書き中")
+                throw new Exception("イベントコピー後の「下書き中」が見つからない。");
         }
 
         private void EditEvent(WebDriver driver, Changeset changeset)
@@ -155,8 +155,9 @@ namespace ConnpassAutomator.Application.Service
             System.Diagnostics.Debug.WriteLine(driver.Url);
             driverWait.Until((_) => driver.Url.Contains("published"));
 
-            var mainTitle = driver.FindElement(By.ClassName("main_title_2"));
-            if (mainTitle.Text != "イベントを公開しました") throw new Exception("イベント公開後の「公開しました」文言が見つからない。");
+
+            if (driver.GetClassTextOf("main_title_2") != "イベントを公開しました")
+                throw new Exception("イベント公開後の「公開しました」文言が見つからない。");
         }
 
         private bool TryWith(Action action)

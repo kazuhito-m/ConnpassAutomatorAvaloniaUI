@@ -9,8 +9,14 @@ namespace ConnpassAutomator.Domain.Model.Selenium
 
         public static void ClickClassOf(this WebDriver driver, string className)
         {
-            var publishEvent = driver.FindElement(By.ClassName(className));
-            publishEvent.Click();
+            var classElement = driver.FindElement(By.ClassName(className));
+            classElement.Click();
+        }
+
+        public static string GetClassTextOf(this WebDriver driver, string className)
+        {
+            var classElement = driver.FindElement(By.ClassName(className));
+            return classElement.Text;
         }
     }
 }
