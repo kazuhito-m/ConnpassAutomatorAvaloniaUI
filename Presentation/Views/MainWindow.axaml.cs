@@ -20,6 +20,7 @@ namespace Presentation.Views
         private async void OnClickCreateEvent(object sender, RoutedEventArgs e)
         {
             if (!await Validation()) return;
+            if (!await ValidationCredential()) return;
             await ThisSystemMessageBox.Show("タイトル", "umakuikanai", this);
         }
 
@@ -60,6 +61,16 @@ namespace Presentation.Views
             input!.Focus();
 
             return true;
+        }
+
+        private async Task<bool> ValidationCredential()
+        {
+            var vm = ViewModel;
+            if (vm == null) return false;
+            if (vm.UserName.Trim().Length > 0 
+                && vm.Password.Trim().Length > 0) return true;
+            await ThisSystemMessageBox.Show(Title, "ログイン情報が未設定です。", this, icon: MessageBox.Avalonia.Enums.Icon.Warning);
+            return false;
         }
 
         private async void OnButtonClick(object sender, RoutedEventArgs e)

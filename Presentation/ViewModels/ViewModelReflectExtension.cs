@@ -33,5 +33,11 @@ namespace Presentation.ViewModels
             vm.EndDate = PickerValueConverter.ToDatePickerValueOf(changeSet.EndDate);
             vm.EndTime = PickerValueConverter.ToTimePickerValueOf(changeSet.EndTime);
         }
+
+        internal static void ReflectFrom(this MainWindowViewModel vm, Credential credential)
+        {
+            vm.UserName = credential.UserName;
+            vm.Password = credential.Password;
+        }
     }
 }

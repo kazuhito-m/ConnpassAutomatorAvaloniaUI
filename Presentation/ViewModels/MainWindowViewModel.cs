@@ -44,7 +44,7 @@ namespace Presentation.ViewModels
                     selectedProfileIndex = 0;
                     var selectedProject = profile.Projects[selectedProfileIndex];
                     this.ReflectFrom(selectedProject);
-                    UserName = profile.Credential.UserName;
+                    this.ReflectFrom(profile.Credential);
                 }
 
                 return names;
@@ -128,6 +128,7 @@ namespace Presentation.ViewModels
         }
 
         public string UserName { get; set; } = "";
+        public string Password { get; set; } = "";
 
         public MainWindowViewModel() : this(null, null) { }
 
