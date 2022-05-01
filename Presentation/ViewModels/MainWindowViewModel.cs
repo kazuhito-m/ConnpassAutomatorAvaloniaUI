@@ -45,10 +45,10 @@ namespace Presentation.ViewModels
         private DateTimeOffset Add7DayOf(DateTimeOffset date)
             => date.AddDays(7);
 
-        public async void IncrimentVolNo()
-        {
-            await ThisSystemMessageBox.Show("Test", ",‘I‘ð‚Í:" + selectedProfileIndex);
-        }
+        public void IncrimentVolNo() 
+            => EventTitle = new EventTitle(EventTitle)
+                .IncrimentVolNo()
+                .Value;
 
         public List<string> FindProjectNames
         {

@@ -82,9 +82,10 @@ namespace Presentation.Views
             var vm = ViewModel();
             if (vm.UserName.Trim().Length > 0
                 && vm.Password.Trim().Length > 0) return true;
+
             await ShowWarnMessage("ログイン情報が未設定です。");
-            // TODO ログイン情報を入力させる。
-            return false;
+
+            return await ShowEditCredentialWindow();
         }
 
 
@@ -114,18 +115,20 @@ namespace Presentation.Views
             button.IsEnabled = true;
         }
 
-        private async Task ShowEditCredentialWindow()
+        private async Task<bool> ShowEditCredentialWindow()
         {
             var vm = CredentialEditWindowViewModel.Of(ViewModel());
             var window = new CredentialEditWindow() { DataContext = vm };
 
             var commited = await window.ShowDialog<bool>(this);
 
-            if (!commited) return;
+            if (!commited) return false;
 
             var myVm = ViewModel();
             vm.ReflectTo(myVm);
             myVm.Save();
+
+            return true;
         }
 
         private async Task ShowWarnMessage(string message)
