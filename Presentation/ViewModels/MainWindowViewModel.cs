@@ -36,6 +36,15 @@ namespace Presentation.ViewModels
             return connpassEventService.CreateEvent(selectedProject, profile.Credential);
         }
 
+        public void Plus7DayOfEventStartAndEndDateTime()
+        {
+            if (StartDate.HasValue) StartDate = Add7DayOf(StartDate.Value);
+            if (EndDate.HasValue) EndDate = Add7DayOf(EndDate.Value);
+        }
+
+        private DateTimeOffset Add7DayOf(DateTimeOffset date)
+            => date.AddDays(7);
+
         public async void IncrimentVolNo()
         {
             await ThisSystemMessageBox.Show("Test", ",‘I‘ð‚Í:" + selectedProfileIndex);
