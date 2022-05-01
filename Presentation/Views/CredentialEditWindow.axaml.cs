@@ -1,5 +1,6 @@
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 
 namespace Presentation.Views
@@ -13,6 +14,13 @@ namespace Presentation.Views
             this.AttachDevTools();
 #endif
         }
+
+        private void OnClickOk(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void OnClickCancel(object sender, RoutedEventArgs e)
+            => Close();
 
         private void InitializeComponent()
         {

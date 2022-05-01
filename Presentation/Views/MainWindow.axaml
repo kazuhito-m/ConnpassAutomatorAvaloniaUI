@@ -17,9 +17,6 @@
 	</Design.DataContext>
 
 	<Window.Styles>
-		<Style Selector="TextBox">
-			<Setter Property="FontFamily" Value="Meiryo"/>
-		</Style>
 		<Style Selector="StackPanel">
 			<Setter Property="Orientation" Value="Vertical"/>
 			<Setter Property="HorizontalAlignment" Value="Left"/>
