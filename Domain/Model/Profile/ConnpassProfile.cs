@@ -11,16 +11,8 @@ namespace ConnpassAutomator.Domain.Model.Profile
         {
             return new ConnpassProfile()
             {
-                Projects = new List<Project>() {
-                    new Project()
-                    {
-                        CopySource = new CopySource()
-                        {
-                            EventTitle = "未設定(入力・変更してください)"
-                        }
-                    }
-                },
-                Credential = new Credential()
+                Projects = new List<Project>() { Project.DefaultWhenAddNew() },
+                Credential = new()
             };
         }
     }
