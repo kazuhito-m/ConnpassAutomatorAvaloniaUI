@@ -57,7 +57,7 @@ namespace Presentation.Views
                 if (timePicker.SelectedTime != null) return false;
             }
 
-            await ThisSystemMessageBox.Show(Title, $"{fieldCaption} を入力してください。", this, icon: MessageBox.Avalonia.Enums.Icon.Warning);
+            await ShowWarnMessage($"{fieldCaption} を入力してください。");
             input!.Focus();
 
             return true;
@@ -69,10 +69,13 @@ namespace Presentation.Views
             if (vm == null) return false;
             if (vm.UserName.Trim().Length > 0
                 && vm.Password.Trim().Length > 0) return true;
-            await ThisSystemMessageBox.Show(Title, "ログイン情報が未設定です。", this, icon: MessageBox.Avalonia.Enums.Icon.Warning);
+            await ShowWarnMessage("ログイン情報が未設定です。");
             // TODO ログイン情報を入力させる。
             return false;
         }
+
+        private async Task ShowWarnMessage(string message)
+            => await ThisSystemMessageBox.Show(Title, message, this, icon: MessageBox.Avalonia.Enums.Icon.Warning);
 
         private async void OnButtonClick(object sender, RoutedEventArgs e)
         {
