@@ -1,3 +1,4 @@
+using Avalonia.Interactivity;
 using ConnpassAutomator.Application.Service;
 using ConnpassAutomator.Domain.Model.Profile;
 using Presentation.Alert;

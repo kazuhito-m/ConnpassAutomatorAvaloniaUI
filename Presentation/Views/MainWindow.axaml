@@ -50,9 +50,10 @@
 				<StackPanel Orientation="Horizontal" Spacing="8">
 
 					<StackPanel>
-						<TextBlock Text="コピー元イベントタイトル(前方一致)" />
-						<TextBox AcceptsReturn="True" TextWrapping="Wrap" Height="54" Width="300"
-								  Text="{Binding CopyBaseEventTitle}"/>
+						<TextBlock Text="コピー元イベントタイトル(前方一致)"/>
+						<TextBox x:Name="copyBaseEventTitle"
+							AcceptsReturn="True" TextWrapping="Wrap" Height="54" Width="300"
+							Text="{Binding CopyBaseEventTitle}"/>
 					</StackPanel>
 
 				</StackPanel>
@@ -60,15 +61,18 @@
 				<StackPanel>
 					<TextBlock Text="タイトル" />
 					<StackPanel Orientation="Horizontal" Spacing="8" >
-						<TextBox AcceptsReturn="True" TextWrapping="Wrap" Height="54" Width="300"
-									Text="{Binding EventTitle}"/>
+						<TextBox x:Name="title"
+							AcceptsReturn="True" TextWrapping="Wrap" Height="54" Width="300"
+							Text="{Binding EventTitle}"/>
 						<Button Command="{Binding IncrimentVolNo}">+1</Button>
 					</StackPanel>
 				</StackPanel>
 
 				<StackPanel>
 					<TextBlock Text="サブタイトル" />
-					<TextBox Width="300" Text="{Binding SubTitle}"/>
+					<TextBox x:Name="subTitle"
+						Width="300"
+						Text="{Binding SubTitle}"/>
 				</StackPanel>
 
 				<StackPanel>
@@ -77,24 +81,25 @@
 						<Button  Click="OnButtonClick">+7Day</Button>
 					</StackPanel>
 					<StackPanel Orientation="Horizontal" Spacing="8">
-						<DatePicker SelectedDate="{Binding StartDate}"/>
-						<TimePicker SelectedTime="{Binding StartTime}"/>
+						<DatePicker x:Name="startDate" SelectedDate="{Binding StartDate}"/>
+						<TimePicker x:Name="startTime" SelectedTime="{Binding StartTime}"/>
 					</StackPanel>
 				</StackPanel>
 
 				<StackPanel>
 					<TextBlock Text="終了時間" />
 					<StackPanel Orientation="Horizontal" Spacing="8">
-						<DatePicker SelectedDate="{Binding EndDate}"/>
-						<TimePicker SelectedTime="{Binding EndTime}"/>
+						<DatePicker x:Name="endDate" SelectedDate="{Binding EndDate}"/>
+						<TimePicker x:Name="endTime" SelectedTime="{Binding EndTime}"/>
 					</StackPanel>
 				</StackPanel>
 
 				<StackPanel Orientation="Horizontal" Spacing="8">
 					<StackPanel>
 						<TextBlock Text="イベントの説明" />
-						<TextBox AcceptsReturn="True" TextWrapping="Wrap" Height="120" Width="300"
-								 Text="{Binding EventDescription}"/>
+						<TextBox x:Name="eventDescription"
+							AcceptsReturn="True" TextWrapping="Wrap" Height="120" Width="300"
+							Text="{Binding EventDescription}"/>
 					</StackPanel>
 
 				</StackPanel>
@@ -111,7 +116,7 @@
 				</Border>
 			</StackPanel>
 			<StackPanel HorizontalAlignment="Right">
-				<Button  Click="OnButtonClick" >この内容でイベントを作成</Button>
+				<Button Click="OnClickCreateEvent" >この内容でイベントを作成</Button>
 			</StackPanel>
 		</StackPanel>
 
