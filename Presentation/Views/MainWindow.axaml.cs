@@ -20,7 +20,11 @@ namespace Presentation.Views
 
         private async void OnClickCreateEvent(object sender, RoutedEventArgs e)
         {
+
             if (!await Validation()) return;
+
+            var button = (Button)sender;
+            button.IsEnabled = false;
 
             var result = ViewModel().CreateEvent();
 
@@ -29,13 +33,15 @@ namespace Presentation.Views
                 case CreateEventResultState.成功:
                     await ShowSuccessMessage("Connpassイベントの作成が完了しました。");
                     break;
-                case CreateEventResultState.ログイン失敗 :
+                case CreateEventResultState.ログイン失敗:
                     await ShowWarnMessage("Connpassへのログインに失敗しました。ログイン情報を確認してください。");
                     break;
                 default:
                     await ShowWarnMessage("Connpassイベントの作成に失敗しました。");
                     break;
             }
+
+            button.IsEnabled = true;
         }
 
         private async Task<bool> Validation()
