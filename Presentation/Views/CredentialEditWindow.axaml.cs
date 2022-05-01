@@ -15,17 +15,13 @@ namespace Presentation.Views
 #endif
         }
 
+        private void InitializeComponent()
+            => AvaloniaXamlLoader.Load(this);
+
         private void OnClickOk(object sender, RoutedEventArgs e)
-        {
-            Close(true);
-        }
+            => Close(true);
 
         private void OnClickCancel(object sender, RoutedEventArgs e)
             => Close(false);
-
-        private void InitializeComponent()
-        {
-            AvaloniaXamlLoader.Load(this);
-        }
     }
 }

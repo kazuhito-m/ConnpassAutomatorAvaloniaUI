@@ -1,11 +1,5 @@
-using ConnpassAutomator.Application.Service;
-using ConnpassAutomator.Domain.Model.Connpass.Event;
-using ConnpassAutomator.Domain.Model.Profile;
-using Presentation.Alert;
 using ReactiveUI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.ComponentModel;
 
 namespace Presentation.ViewModels
 {
@@ -13,6 +7,30 @@ namespace Presentation.ViewModels
     {
         private string userName = "";
         private string password = "";
+
+        private bool commitable = false;
+
+        private void ThisPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Commitable") return;
+            Commitable = Validateion();
+        }
+
+        private bool Validateion()
+            => UserName.Length > 6 && Password.Length > 6;
+
+        internal void ReflectTo(MainWindowViewModel baseVm)
+        {
+            baseVm.UserName = UserName;
+            baseVm.Password = Password;
+        }
+
+        internal static CredentialEditWindowViewModel Of(MainWindowViewModel baseVm)
+            => new()
+            {
+                UserName = baseVm.UserName,
+                Password = baseVm.Password
+            };
 
         // Simple Get/Set Only Properties
 
@@ -27,17 +45,16 @@ namespace Presentation.ViewModels
             get => password;
             set => this.RaiseAndSetIfChanged(ref password, value);
         }
-        internal  void ReflectTo(MainWindowViewModel baseVm)
+
+        public bool Commitable
         {
-            baseVm.UserName = UserName;
-            baseVm.Password = Password;
+            get => commitable;
+            set => this.RaiseAndSetIfChanged(ref commitable, value);
         }
 
-        internal static CredentialEditWindowViewModel Of(MainWindowViewModel baseVm)
-            => new()
-            {
-                UserName = baseVm.UserName,
-                Password = baseVm.Password
-            };
+        public CredentialEditWindowViewModel()
+        {
+            this.PropertyChanged += ThisPropertyChanged;
+        }
     }
 }

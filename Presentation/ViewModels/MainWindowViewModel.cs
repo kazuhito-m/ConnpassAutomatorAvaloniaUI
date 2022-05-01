@@ -20,6 +20,9 @@ namespace Presentation.ViewModels
         private DateTimeOffset? endDate;
         private TimeSpan? endTime;
 
+        private string userName = "";
+        private string password = "";
+
         private int selectedProfileIndex = 0;
 
         private readonly ConnpassEventService connpassEventService;
@@ -136,8 +139,17 @@ namespace Presentation.ViewModels
             set => this.RaiseAndSetIfChanged(ref eventDescription, value);
         }
 
-        public string UserName { get; set; } = "";
-        public string Password { get; set; } = "";
+        public string UserName
+        {
+            get => userName;
+            set => this.RaiseAndSetIfChanged(ref userName, value);
+        }
+
+        public string Password
+        {
+            get => password;
+            set => this.RaiseAndSetIfChanged(ref password, value);
+        }
 
         public MainWindowViewModel() : this(null, null) { }
 
