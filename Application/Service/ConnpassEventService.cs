@@ -1,8 +1,7 @@
 ﻿using ConnpassAutomator.Domain.Model.Connpass.Event;
 using ConnpassAutomator.Domain.Model.Profile;
+using ConnpassAutomator.Domain.Model.Selenium;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
 using System;
 using System.Threading;
 
@@ -10,18 +9,14 @@ namespace ConnpassAutomator.Application.Service
 {
     public class ConnpassEventService
     {
+        private readonly ISeleniumRepository seleniumRepository;
+
         public CreateEventResultState CreateEvent(Project project, Credential credential)
         {
-            var baseDir = AppDomain.CurrentDomain.BaseDirectory;
-            var driver = new ChromeDriver(baseDir, new ChromeOptions(), TimeSpan.FromSeconds(120))
-            {
-                Url = "https://connpass.com/editmanage/"
-            };
-            var driverWait = new WebDriverWait(driver, TimeSpan.FromSeconds(60))
-            {
-                PollingInterval = TimeSpan.FromSeconds(1),
-            };
-            driverWait.IgnoreExceptionTypes(typeof(NoSuchElementException));
+            var driver = seleniumRepository.CreateWebDriver();
+            driver.Url = "https://connpass.com/editmanage/";
+
+            var driverWait = seleniumRepository.CreateWait(driver, 60, 1);
 
             driver.FindElement(By.Name("username")).SendKeys(credential.UserName);
             driver.FindElement(By.Name("password")).SendKeys(credential.Password);
@@ -158,8 +153,12 @@ namespace ConnpassAutomator.Application.Service
             }
 
             driver.Close();
+            driver = null;
 
             return CreateEventResultState.成功;
         }
+
+        public ConnpassEventService(ISeleniumRepository seleniumRepository)
+            => this.seleniumRepository = seleniumRepository;
     }
 }

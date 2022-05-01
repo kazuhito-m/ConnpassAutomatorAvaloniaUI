@@ -1,7 +1,9 @@
 using Avalonia;
 using ConnpassAutomator.Application.Service;
 using ConnpassAutomator.Domain.Model.Profile;
+using ConnpassAutomator.Domain.Model.Selenium;
 using ConnpassAutomator.Infrastructure.Datasource.Profile;
+using ConnpassAutomator.Infrastructure.Datasource.Selenium;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -30,6 +32,8 @@ namespace Presentation
                 {
                     services.AddSingleton<IProfileRepository, ProfileDatasource>();
                     services.AddSingleton<ProfileService>();
+                    services.AddSingleton<ConnpassEventService>();
+                    services.AddSingleton<ISeleniumRepository, SeleniumDatasource>();
                     services.AddSingleton<ConnpassEventService>();
 
                     services.AddSingleton<MainWindowViewModel>();
