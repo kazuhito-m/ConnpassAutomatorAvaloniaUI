@@ -17,10 +17,11 @@ namespace Presentation.Views
 
         private void OnClickOk(object sender, RoutedEventArgs e)
         {
+            Close(true);
         }
 
         private void OnClickCancel(object sender, RoutedEventArgs e)
-            => Close();
+            => Close(false);
 
         private void InitializeComponent()
         {

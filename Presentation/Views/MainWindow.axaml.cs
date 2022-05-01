@@ -121,7 +121,7 @@ namespace Presentation.Views
 
             var commited = await window.ShowDialog<bool>(this);
 
-            if (commited) return;
+            if (!commited) return;
 
             var myVm = ViewModel();
             vm.ReflectTo(myVm);
