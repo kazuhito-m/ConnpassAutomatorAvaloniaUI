@@ -3,6 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
 		<RootNamespace>ConnpassAutomator.Infrastructure</RootNamespace>
+		<PublishChromeDriver>true</PublishChromeDriver>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -10,7 +11,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="101.0.4951.4100" />
+		<PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="100.0.4896.6000" />
 	</ItemGroup>
 
 </Project>
