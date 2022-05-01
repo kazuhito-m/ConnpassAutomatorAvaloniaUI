@@ -89,7 +89,7 @@ namespace ConnpassAutomator.Application.Service
             if (titleElem.Text != "下書き中") throw new Exception("イベントコピー後の「下書き中」が見つからない。");
         }
 
-        private  void EditEvent(WebDriver driver, Project project)
+        private void EditEvent(WebDriver driver, Project project)
         {
             var changeset = project.Changeset;
 
@@ -100,19 +100,23 @@ namespace ConnpassAutomator.Application.Service
             //開催日時編集
             EditDateAndTimeOfEvent(driver, changeset);
             //イベント編集
-            {
-                var fieldTitle = driver.FindElement(By.Id("FieldDescription"));
-                //編集モードに入る
-                fieldTitle.Click();
-                //中身の文字
-                var title = fieldTitle.FindElement(By.Name("description_input"));
-                //タイトルを書き換える
-                var titleValue = title.GetAttribute("value");
-                title.Clear();
-                title.SendKeys(project.Changeset.Explanation);
-                var submit = fieldTitle.FindElement(By.CssSelector("button[type=submit]"));
-                submit.Click();
-            }
+            EditTextPartOfEvent(driver, project, "FieldDescription", "description_input", changeset.Explanation);
+        }
+
+        private void EditTextPartOfEvent(WebDriver driver, Project project, string titleElementId, string valueElementName, string text)
+        {
+            var fieldTitle = driver.FindElement(By.Id(titleElementId));
+            //編集モードに入る
+            fieldTitle.Click();
+            //中身の文字
+            var title = fieldTitle.FindElement(By.Name(valueElementName));
+            //書き換える
+            var titleValue = title.GetAttribute("value");
+            title.Clear();
+            title.SendKeys(text);
+
+            var submit = fieldTitle.FindElement(By.CssSelector("button[type=submit]"));
+            submit.Click();
         }
 
         private void EditDateAndTimeOfEvent(WebDriver driver, Changeset changeset)
@@ -143,32 +147,11 @@ namespace ConnpassAutomator.Application.Service
             return picerArea;
         }
 
-        private void EditTextPartOfEvent(WebDriver driver, Project project, string titleElementId, string valueElementName, string text)
-        {
-            var fieldTitle = driver.FindElement(By.Id(titleElementId));
-            //編集モードに入る
-            fieldTitle.Click();
-            //中身の文字
-            var title = fieldTitle.FindElement(By.Name(valueElementName));
-            //書き換える
-            var titleValue = title.GetAttribute("value");
-            title.Clear();
-            title.SendKeys(text);
-
-            var submit = fieldTitle.FindElement(By.CssSelector("button[type=submit]"));
-            submit.Click();
-        }
-
         private void PublishImmediately(WebDriver driver, OpenQA.Selenium.Support.UI.WebDriverWait driverWait)
         {
             //即時公開する
-            {
-                var publishEvent = driver.FindElement(By.ClassName("PublishEvent"));
-                publishEvent.Click();
-
-                var popupSubmit = driver.FindElement(By.ClassName("PopupSubmit"));
-                popupSubmit.Click();
-            }
+            driver.ClickClassOf("PublishEvent");
+            driver.ClickClassOf("PopupSubmit");
 
             //公開されたことを確認して終了
             System.Diagnostics.Debug.WriteLine(driver.Url);
