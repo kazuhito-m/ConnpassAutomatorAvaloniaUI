@@ -20,28 +20,21 @@ namespace Presentation.Views
 
         private async void OnClickCreateEvent(object sender, RoutedEventArgs e)
         {
-
-            if (!await Validation()) return;
-
             var button = (Button)sender;
             button.IsEnabled = false;
 
-            var result = ViewModel().CreateEvent();
-
-            switch (result)
-            {
-                case CreateEventResultState.成功:
-                    await ShowSuccessMessage("Connpassイベントの作成が完了しました。");
-                    break;
-                case CreateEventResultState.ログイン失敗:
-                    await ShowWarnMessage("Connpassへのログインに失敗しました。ログイン情報を確認してください。");
-                    break;
-                default:
-                    await ShowWarnMessage("Connpassイベントの作成に失敗しました。");
-                    break;
-            }
+            await CreateEvent();
 
             button.IsEnabled = true;
+        }
+
+        private async Task CreateEvent()
+        {
+            if (!await Validation()) return;
+
+            var result = ViewModel().CreateEvent();
+
+            await ShowCreateEventResultMessage(result);
         }
 
         private async Task<bool> Validation()
@@ -92,6 +85,23 @@ namespace Presentation.Views
             await ShowWarnMessage("ログイン情報が未設定です。");
             // TODO ログイン情報を入力させる。
             return false;
+        }
+
+
+        private async Task ShowCreateEventResultMessage(CreateEventResultState result)
+        {
+            switch (result)
+            {
+                case CreateEventResultState.成功:
+                    await ShowSuccessMessage("Connpassイベントの作成が完了しました。");
+                    break;
+                case CreateEventResultState.ログイン失敗:
+                    await ShowWarnMessage("Connpassへのログインに失敗しました。\nログイン情報を確認してください。");
+                    break;
+                default:
+                    await ShowWarnMessage("Connpassイベントの作成に失敗しました。");
+                    break;
+            }
         }
 
         private async Task ShowWarnMessage(string message)
