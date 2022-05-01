@@ -35,7 +35,7 @@ namespace ConnpassAutomator.Application.Service
             if (!TryWith(() => FindBaseEventAndCopy(driver, project)))
                 return CreateEventResultState.失敗;
 
-            if (!TryWith(() => EditEvent(driver, project)))
+            if (!TryWith(() => EditEvent(driver, project.Changeset)))
                 return CreateEventResultState.失敗;
 
             if (!TryWith(() => PublishImmediately(driver, driverWait)))
@@ -89,21 +89,19 @@ namespace ConnpassAutomator.Application.Service
             if (titleElem.Text != "下書き中") throw new Exception("イベントコピー後の「下書き中」が見つからない。");
         }
 
-        private void EditEvent(WebDriver driver, Project project)
+        private void EditEvent(WebDriver driver, Changeset changeset)
         {
-            var changeset = project.Changeset;
-
             //タイトル編集
-            EditTextPartOfEvent(driver, project, "FieldTitle", "title", changeset.EventTitle);
+            EditTextPartOfEvent(driver, "FieldTitle", "title", changeset.EventTitle);
             //サブタイトル編集
-            EditTextPartOfEvent(driver, project, "FieldSubTitle", "sub_title", changeset.SubEventTitle);
+            EditTextPartOfEvent(driver, "FieldSubTitle", "sub_title", changeset.SubEventTitle);
             //開催日時編集
             EditDateAndTimeOfEvent(driver, changeset);
             //イベント編集
-            EditTextPartOfEvent(driver, project, "FieldDescription", "description_input", changeset.Explanation);
+            EditTextPartOfEvent(driver, "FieldDescription", "description_input", changeset.Explanation);
         }
 
-        private void EditTextPartOfEvent(WebDriver driver, Project project, string titleElementId, string valueElementName, string text)
+        private void EditTextPartOfEvent(WebDriver driver, string titleElementId, string valueElementName, string text)
         {
             var fieldTitle = driver.FindElement(By.Id(titleElementId));
             //編集モードに入る
@@ -125,7 +123,7 @@ namespace ConnpassAutomator.Application.Service
             //編集モードに入る
             fieldTitle.Click();
 
-            IWebElement startDate = EditDateOrTimePickerOnEvent(fieldTitle, "start_date", changeset.StartDate);
+            var startDate = EditDateOrTimePickerOnEvent(fieldTitle, "start_date", changeset.StartDate);
             EditDateOrTimePickerOnEvent(fieldTitle, "start_time", changeset.StartTime);
             EditDateOrTimePickerOnEvent(fieldTitle, "end_date", changeset.EndDate);
             EditDateOrTimePickerOnEvent(fieldTitle, "end_time", changeset.EndTime);
