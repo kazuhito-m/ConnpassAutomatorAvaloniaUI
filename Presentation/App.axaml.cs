@@ -1,6 +1,8 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Avalonia.Platform;
+using Presentation.Font;
 using Presentation.ViewModels;
 using Presentation.Views;
 using System;
@@ -25,6 +27,11 @@ namespace Presentation
             }
 
             base.OnFrameworkInitializationCompleted();
+        }
+        public override void RegisterServices()
+        {
+            AvaloniaLocator.CurrentMutable.Bind<IFontManagerImpl>().ToConstant(new CustomFontManager());
+            base.RegisterServices();
         }
 
         public App() : this(null)

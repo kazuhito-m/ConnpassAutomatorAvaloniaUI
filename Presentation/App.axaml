@@ -8,8 +8,5 @@
 
     <Application.Styles>
         <FluentTheme Mode="Light"/>
-		<Style Selector="TextBox">
-			<Setter Property="FontFamily" Value="Meiryo"/>
-		</Style>
 	</Application.Styles>
 </Application>

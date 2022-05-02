@@ -41,7 +41,13 @@
 					<Setter Property="Height" Value="32"/>
 				</Style>
 			</StackPanel.Styles>
-			<TextBlock Text="イベントプロジェクト" />
+			<TextBlock Text="イベントプロジェクト"/>
+			<TextBlock Text="あいう" FontFamily="resm:Presentation.Assets.Fonts.NotoSansCJKjp_Regular.ttf?assembly=Presentation"/>
+			<TextBlock Text="あいう" FontFamily="avars://Assets/Fonts/NotoSansCJKjp_Regular.ttf"/>
+			<TextBlock Text="あいう" FontFamily="/Assets/Fonts/NotoSansCJKjp_Regular.ttf"/>
+			<TextBlock Text="あいう" FontFamily="NotoSans"/>
+			<TextBlock Text="あいう" FontFamily="resm:Presentation.Assets.Fonts.NotoSansCJKjp_Regular#NotoSans"/>
+
 			<ComboBox Items="{Binding ProjectNames}" SelectedIndex="{Binding SelectedProjectIndex}" Width="380">
 			</ComboBox>
 			<Button Click="OnClickDeleteSelectedtProject" IsEnabled="{Binding DeletableProject}">-</Button>
@@ -108,6 +114,7 @@
 						<TextBlock Text="イベントの説明" />
 						<TextBox x:Name="eventDescription"
 							AcceptsReturn="True" TextWrapping="Wrap" Height="120"
+							FontFamily="avares://Assets/Fonts/NotoSansCJKjp_Regular.ttf#NotoSans"
 							Text="{Binding EventDescription}"/>
 					</StackPanel>
 
