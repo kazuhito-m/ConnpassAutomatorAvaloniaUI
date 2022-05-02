@@ -1,4 +1,5 @@
 using ConnpassAutomator.Domain.Model.Profile.Password;
+using System.Text.Json.Serialization;
 
 namespace ConnpassAutomator.Domain.Model.Profile
 {
@@ -9,10 +10,11 @@ namespace ConnpassAutomator.Domain.Model.Profile
 
         private readonly DecryptableEncrypter encripter = new();
 
-        public void SetPlainTextPassword(string plainTextPassword)
-            => Password = encripter.Encrypt(plainTextPassword);
-
-        public string GetPlainTextPassword()
-            => encripter.Decrypt(Password);
+        [JsonIgnore]
+        public string PlainTextPassword
+        {
+            get => encripter.Decrypt(Password);
+            set => Password = encripter.Encrypt(value);
+        }
     }
 }

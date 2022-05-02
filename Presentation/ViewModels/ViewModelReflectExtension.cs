@@ -37,13 +37,13 @@ namespace Presentation.ViewModels
         internal static void ReflectTo(this MainWindowViewModel vm, Credential credential)
         {
             credential.UserName = vm.UserName;
-            credential.SetPlainTextPassword(vm.Password);
+            credential.PlainTextPassword = vm.Password;
         }
 
         internal static void ReflectFrom(this MainWindowViewModel vm, Credential credential)
         {
             vm.UserName = credential.UserName;
-            vm.Password = credential.GetPlainTextPassword();
+            vm.Password = credential.PlainTextPassword;
         }
     }
 }
