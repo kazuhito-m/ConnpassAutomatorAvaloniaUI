@@ -12,10 +12,10 @@
 
 	<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Spacing="48">
 		<StackPanel>
-			<TextBox x:Name="copyBaseEventTitle"
+			<TextBox x:Name="debugText"
 				AcceptsReturn="True" TextWrapping="Wrap" Width="600" Height="200"
 				Text="{Binding CopyBaseEventTitle}"/>
-			<Button>Go!</Button>
+			<Button Click="OnClickGo">Go!</Button>
 		</StackPanel>
 	</StackPanel>
 	
