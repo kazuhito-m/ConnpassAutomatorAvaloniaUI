@@ -1,3 +1,5 @@
+using ConnpassAutomator.Domain.Model.Profile.Password;
+
 namespace ConnpassAutomator.Domain.Model.Profile
 {
     public class Credential
@@ -5,14 +7,12 @@ namespace ConnpassAutomator.Domain.Model.Profile
         public string UserName { get; set; } = "";
         public string Password { get; set; } = "";
 
+        private readonly DecryptableEncrypter encripter = new();
+
         public void SetPlainTextPassword(string plainTextPassword)
-        {
-            Password = plainTextPassword;
-        }
+            => Password = encripter.Encrypt(plainTextPassword);
 
         public string GetPlainTextPassword()
-        {
-            return Password;
-        }
+            => encripter.Decrypt(Password);
     }
 }
