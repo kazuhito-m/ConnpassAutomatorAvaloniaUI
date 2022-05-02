@@ -21,6 +21,12 @@
 			<Setter Property="Orientation" Value="Vertical"/>
 			<Setter Property="HorizontalAlignment" Value="Left"/>
 		</Style>
+		<Style Selector="TextBox">
+			<Setter Property="Width" Value="500"/>
+		</Style>
+		<Style Selector="Button">
+			<Setter Property="HorizontalContentAlignment" Value="Center"/>
+		</Style>
 	</Window.Styles>
 
 	<StackPanel Orientation="Vertical"
@@ -29,18 +35,25 @@
 				Spacing="8">
 
 		<StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="8">
+			<StackPanel.Styles>
+				<Style Selector="Button">
+					<Setter Property="Width" Value="32"/>
+					<Setter Property="Height" Value="32"/>
+				</Style>
+			</StackPanel.Styles>
 			<TextBlock Text="イベントプロジェクト" />
 			<ComboBox Items="{Binding ProjectNames}" SelectedIndex="{Binding SelectedProjectIndex}" Width="380">
 			</ComboBox>
-			<Button Click="OnClickDeleteSelectedtProject" IsEnabled="{Binding DeletableProject}">−</Button>
-			<Button Click="OnClickAddNewProject">＋</Button>
+			<Button Click="OnClickDeleteSelectedtProject" IsEnabled="{Binding DeletableProject}">-</Button>
+			<Button Click="OnClickAddNewProject">+</Button>
 		</StackPanel>
 
 		<Border
 			BorderBrush="Black"
 			BorderThickness="1"
 			CornerRadius="3"
-			Padding="8">
+			Padding="8"
+			Width="570">
 
 			<StackPanel Spacing="8">
 
@@ -49,7 +62,7 @@
 					<StackPanel>
 						<TextBlock Text="コピー元イベントタイトル(前方一致)"/>
 						<TextBox x:Name="copyBaseEventTitle"
-							AcceptsReturn="True" TextWrapping="Wrap" Height="54" Width="300"
+							AcceptsReturn="True" TextWrapping="Wrap" Height="54"
 							Text="{Binding CopyBaseEventTitle}"/>
 					</StackPanel>
 
@@ -59,7 +72,7 @@
 					<TextBlock Text="タイトル" />
 					<StackPanel Orientation="Horizontal" Spacing="8" >
 						<TextBox x:Name="title"
-							AcceptsReturn="True" TextWrapping="Wrap" Height="54" Width="300"
+							AcceptsReturn="True" TextWrapping="Wrap" Height="54"
 							Text="{Binding EventTitle}"/>
 						<Button Command="{Binding IncrimentVolNo}">+1</Button>
 					</StackPanel>
@@ -68,7 +81,6 @@
 				<StackPanel>
 					<TextBlock Text="サブタイトル" />
 					<TextBox x:Name="subTitle"
-						Width="300"
 						Text="{Binding SubTitle}"/>
 				</StackPanel>
 
@@ -95,7 +107,7 @@
 					<StackPanel>
 						<TextBlock Text="イベントの説明" />
 						<TextBox x:Name="eventDescription"
-							AcceptsReturn="True" TextWrapping="Wrap" Height="120" Width="300"
+							AcceptsReturn="True" TextWrapping="Wrap" Height="120"
 							Text="{Binding EventDescription}"/>
 					</StackPanel>
 
