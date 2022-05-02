@@ -123,13 +123,13 @@ namespace Presentation.Views
         private async void OnClickDeleteSelectedtProject(object sender, RoutedEventArgs e)
         {
             var message = "現在編集中のプロジェクトを削除します。\nよろしいですか。";
-            if (await ShowYesNoMessageBox(message) != ButtonResult.Yes) return;
+            if (!await ShowConfirmMessageBox(message)) return;
 
             ViewModel().DeleteSelectedtProject();
         }
 
-        private async Task<ButtonResult> ShowYesNoMessageBox(string message)
-            => await ThisSystemMessageBox.Show(Title, message, this, ButtonEnum.YesNo, icon: MessageBox.Avalonia.Enums.Icon.Warning);
+        private async Task<bool> ShowConfirmMessageBox(string message)
+            => ButtonResult.Yes == await ThisSystemMessageBox.Show(Title, message, this, ButtonEnum.YesNo, icon: MessageBox.Avalonia.Enums.Icon.Warning);
 
         private async Task ShowWarnMessage(string message)
             => await ThisSystemMessageBox.Show(Title, message, this, icon: MessageBox.Avalonia.Enums.Icon.Warning);
