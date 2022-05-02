@@ -2,6 +2,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
 using ConnpassAutomator.Domain.Model.Connpass.Event;
+using MessageBox.Avalonia.Enums;
 using Presentation.Alert;
 using Presentation.Extension.Avalonia;
 using Presentation.ViewModels;
@@ -119,8 +120,16 @@ namespace Presentation.Views
         private void OnClickAddNewProject(object sender, RoutedEventArgs e)
             => ViewModel().AddNewProject();
 
-        private void OnClickDeleteSelectedtProject(object sender, RoutedEventArgs e)
-            => ViewModel().DeleteSelectedtProject();
+        private async void OnClickDeleteSelectedtProject(object sender, RoutedEventArgs e)
+        {
+            var message = "現在編集中のプロジェクトを削除します。\nよろしいですか。";
+            if (await ShowYesNoMessageBox(message) != ButtonResult.Yes) return;
+
+            ViewModel().DeleteSelectedtProject();
+        }
+
+        private async Task<ButtonResult> ShowYesNoMessageBox(string message)
+            => await ThisSystemMessageBox.Show(Title, message, this, ButtonEnum.YesNo, icon: MessageBox.Avalonia.Enums.Icon.Warning);
 
         private async Task ShowWarnMessage(string message)
             => await ThisSystemMessageBox.Show(Title, message, this, icon: MessageBox.Avalonia.Enums.Icon.Warning);
