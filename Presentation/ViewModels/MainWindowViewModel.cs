@@ -136,9 +136,11 @@ namespace Presentation.ViewModels
 
         private void ReflectNowInputStateTo(ConnpassProfile profile)
         {
-            var lastSelectedProject = profile.Projects[selectedProjectIndex];
-            this.ReflectTo(lastSelectedProject);
+            var index = selectedProjectIndex;
+            var selectedProject = profile.Projects[index];
+            this.ReflectTo(selectedProject);
             this.ReflectTo(profile.Credential);
+            projectNames[index] = selectedProject.CopySource.EventTitle;
         }
 
         internal void Save()
