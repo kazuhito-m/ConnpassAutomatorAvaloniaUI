@@ -34,6 +34,9 @@ namespace Presentation.Views
         {
             if (!await Validation()) return;
 
+            var message = "現在の表示内容でConnpassイベントの作成します。\nよろしいですか。";
+            if (!await ShowConfirmMessageBox(message)) return;
+
             var result = ViewModel().CreateEvent();
 
             await ShowCreateEventResultMessage(result);
