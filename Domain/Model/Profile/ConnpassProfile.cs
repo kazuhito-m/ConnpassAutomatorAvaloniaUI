@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ConnpassAutomator.Domain.Model.Profile
 {
@@ -14,6 +15,14 @@ namespace ConnpassAutomator.Domain.Model.Profile
                 Projects = new List<Project>() { Project.DefaultWhenAddNew() },
                 Credential = new()
             };
+        }
+
+        public Project AddNewProject()
+        {
+            var newProject = Project.DefaultWhenAddNew();
+            newProject.CopySource.EventTitle += $" {Projects.Count + 1}個目";
+            Projects.Add(newProject);
+            return newProject;
         }
     }
 }

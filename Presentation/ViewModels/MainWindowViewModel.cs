@@ -1,9 +1,9 @@
+using Avalonia.Collections;
 using ConnpassAutomator.Application.Service;
 using ConnpassAutomator.Domain.Model.Connpass.Event;
 using ConnpassAutomator.Domain.Model.Profile;
 using ReactiveUI;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Presentation.ViewModels
@@ -22,7 +22,7 @@ namespace Presentation.ViewModels
         private string userName = "";
         private string password = "";
 
-        private List<string> profileNames = new();
+        private AvaloniaList<string> profileNames = new();
         private int selectedProfileIndex = 0;
 
         private readonly ConnpassEventService connpassEventService;
@@ -34,6 +34,16 @@ namespace Presentation.ViewModels
             var selectedProject = profile.Projects[selectedProfileIndex];
 
             return connpassEventService.CreateEvent(selectedProject, profile.Credential);
+        }
+
+        internal void AddNewProfile()
+        {
+            var profile = SaveNowInputState();
+            var newProject = profile.AddNewProject();
+            profileService.Save(profile);
+
+            profileNames.Add(newProject.CopySource.EventTitle);
+            SelectedProfileIndex = profile.Projects.Count - 1;
         }
 
         public void Plus7DayOfEventStartAndEndDateTime()
@@ -50,16 +60,17 @@ namespace Presentation.ViewModels
                 .IncrimentVolNo()
                 .Value;
 
-        public List<string> ProfileNames
+        public AvaloniaList<string> ProfileNames
         {
             get
             {
                 if (profileNames.Count > 0) return profileNames;
 
                 var profile = profileService.Load();
-                profileNames = profile.Projects
+                var names = profile.Projects
                     .Select(project => project.CopySource.EventTitle)
                     .ToList();
+                profileNames = new(names);
 
                 selectedProfileIndex = 0;
                 var selectedProject = profile.Projects[selectedProfileIndex];

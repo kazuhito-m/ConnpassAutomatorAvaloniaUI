@@ -116,6 +116,9 @@ namespace Presentation.Views
             return true;
         }
 
+        private void OnClickAddNewProfile(object sender, RoutedEventArgs e)
+            => ViewModel().AddNewProfile();
+
         private async Task ShowWarnMessage(string message)
             => await ThisSystemMessageBox.Show(Title, message, this, icon: MessageBox.Avalonia.Enums.Icon.Warning);
 

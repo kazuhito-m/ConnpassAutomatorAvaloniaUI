@@ -33,7 +33,7 @@
 			<ComboBox Items="{Binding ProfileNames}" SelectedIndex="{Binding SelectedProfileIndex}" Width="380">
 			</ComboBox>
 			<Button Command="{Binding IncrimentVolNo}" IsEnabled="{Binding DeletableProfile}">－</Button>
-			<Button Command="{Binding IncrimentVolNo}">＋</Button>
+			<Button Click="OnClickAddNewProfile">＋</Button>
 		</StackPanel>
 
 		<Border
