@@ -128,11 +128,6 @@ namespace Presentation.Views
         private async Task ShowSuccessMessage(string message)
             => await ThisSystemMessageBox.Show(Title, message, this, icon: MessageBox.Avalonia.Enums.Icon.Success);
 
-        private async void OnButtonClick(object sender, RoutedEventArgs e)
-        {
-            await ThisSystemMessageBox.Show("タイトル", "メッセージボックス出せるよ！", this);
-        }
-
         private async void OnDoubleTappedEndDateTime(object sender, RoutedEventArgs e)
         {
             var window = new DebugWindow();
