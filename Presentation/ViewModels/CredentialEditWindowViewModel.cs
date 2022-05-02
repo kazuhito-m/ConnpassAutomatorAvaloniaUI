@@ -17,7 +17,7 @@ namespace Presentation.ViewModels
         }
 
         private bool Validateion()
-            => UserName.Length > 6 && Password.Length > 6;
+            => UserName.Length >= 6 && Password.Length >= 6;
 
         internal void ReflectTo(MainWindowViewModel baseVm)
         {
