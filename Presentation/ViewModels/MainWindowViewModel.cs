@@ -43,7 +43,24 @@ namespace Presentation.ViewModels
             profileService.Save(profile);
 
             profileNames.Add(newProject.CopySource.EventTitle);
+            this.RaisePropertyChanged("DeletableProfile");
             SelectedProfileIndex = profile.Projects.Count - 1;
+        }
+
+        internal void DeleteSelectedtProfile()
+        {
+            var profile = profileService.Load();
+            profile.Projects.RemoveAt(selectedProfileIndex);
+            profileService.Save(profile);
+
+            var nowIndex = selectedProfileIndex;
+
+            profileNames.RemoveAt(nowIndex);
+            this.RaisePropertyChanged("DeletableProfile");
+
+            var nextIndex = nowIndex;
+            if (profileNames.Count == nextIndex) nextIndex--;
+            SelectedProfileIndex = nextIndex;
         }
 
         internal void Plus7DayOfEventStartAndEndDateTime()
@@ -86,7 +103,19 @@ namespace Presentation.ViewModels
             get => selectedProfileIndex;
             set
             {
-                var profile = SaveNowInputState();
+                if (value == -1)
+                {
+                    this.RaiseAndSetIfChanged(ref selectedProfileIndex, value);
+                    return;
+                }
+
+                var profile = profileService.Load();
+
+                if (selectedProfileIndex != -1)
+                {
+                    ReflectNowInputStateTo(profile);
+                    profileService.Save(profile);
+                }
 
                 var selectedProject = profile.Projects[value];
                 this.ReflectFrom(selectedProject);
@@ -100,11 +129,16 @@ namespace Presentation.ViewModels
         private ConnpassProfile SaveNowInputState()
         {
             var profile = profileService.Load();
+            ReflectNowInputStateTo(profile);
+            profileService.Save(profile);
+            return profile;
+        }
+
+        private void ReflectNowInputStateTo(ConnpassProfile profile)
+        {
             var lastSelectedProject = profile.Projects[selectedProfileIndex];
             this.ReflectTo(lastSelectedProject);
             this.ReflectTo(profile.Credential);
-            profileService.Save(profile);
-            return profile;
         }
 
         internal void Save()
@@ -143,7 +177,7 @@ namespace Presentation.ViewModels
         }
 
         internal DateTimeOffset? EndDate
-        { 
+        {
             get => endDate;
             set => this.RaiseAndSetIfChanged(ref endDate, value);
         }

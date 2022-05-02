@@ -119,6 +119,9 @@ namespace Presentation.Views
         private void OnClickAddNewProfile(object sender, RoutedEventArgs e)
             => ViewModel().AddNewProfile();
 
+        private void OnClickDeleteSelectedtProfile(object sender, RoutedEventArgs e)
+            => ViewModel().DeleteSelectedtProfile();
+
         private async Task ShowWarnMessage(string message)
             => await ThisSystemMessageBox.Show(Title, message, this, icon: MessageBox.Avalonia.Enums.Icon.Warning);
 
