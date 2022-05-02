@@ -43,7 +43,7 @@ namespace Presentation.ViewModels
             profileService.Save(profile);
 
             projectNames.Add(newProject.CopySource.EventTitle);
-            this.RaisePropertyChanged("DeletableProfile");
+            this.RaisePropertyChanged("DeletableProject");
             SelectedProjectIndex = profile.Projects.Count - 1;
         }
 
