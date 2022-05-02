@@ -65,7 +65,7 @@ namespace ConnpassAutomator.Application.Service
         {
             var elements = driver.FindElements(By.ClassName("event_list"));
 
-            IWebElement? copyIconElement = null;
+            IWebElement copyIconElement = null;
             foreach (var element in elements)
             {
                 var status = element.FindElement(By.ClassName("label_status_event")).Text;
