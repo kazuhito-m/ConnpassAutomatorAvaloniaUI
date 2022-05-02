@@ -116,11 +116,11 @@ namespace Presentation.Views
             return true;
         }
 
-        private void OnClickAddNewProfile(object sender, RoutedEventArgs e)
-            => ViewModel().AddNewProfile();
+        private void OnClickAddNewProject(object sender, RoutedEventArgs e)
+            => ViewModel().AddNewProject();
 
-        private void OnClickDeleteSelectedtProfile(object sender, RoutedEventArgs e)
-            => ViewModel().DeleteSelectedtProfile();
+        private void OnClickDeleteSelectedtProject(object sender, RoutedEventArgs e)
+            => ViewModel().DeleteSelectedtProject();
 
         private async Task ShowWarnMessage(string message)
             => await ThisSystemMessageBox.Show(Title, message, this, icon: MessageBox.Avalonia.Enums.Icon.Warning);

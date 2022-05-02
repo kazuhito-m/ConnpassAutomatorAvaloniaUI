@@ -29,11 +29,11 @@
 				Spacing="8">
 
 		<StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="8">
-			<TextBlock Text="イベントプロファイル" />
-			<ComboBox Items="{Binding ProfileNames}" SelectedIndex="{Binding SelectedProfileIndex}" Width="380">
+			<TextBlock Text="イベントプロジェクト" />
+			<ComboBox Items="{Binding ProjectNames}" SelectedIndex="{Binding SelectedProjectIndex}" Width="380">
 			</ComboBox>
-			<Button Click="OnClickDeleteSelectedtProfile" IsEnabled="{Binding DeletableProfile}">－</Button>
-			<Button Click="OnClickAddNewProfile">＋</Button>
+			<Button Click="OnClickDeleteSelectedtProject" IsEnabled="{Binding DeletableProject}">－</Button>
+			<Button Click="OnClickAddNewProject">＋</Button>
 		</StackPanel>
 
 		<Border

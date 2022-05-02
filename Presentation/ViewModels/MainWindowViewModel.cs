@@ -22,8 +22,8 @@ namespace Presentation.ViewModels
         private string userName = "";
         private string password = "";
 
-        private AvaloniaList<string> profileNames = new();
-        private int selectedProfileIndex = 0;
+        private AvaloniaList<string> projectNames = new();
+        private int selectedProjectIndex = 0;
 
         private readonly ConnpassEventService connpassEventService;
         private readonly ProfileService profileService;
@@ -31,36 +31,36 @@ namespace Presentation.ViewModels
         internal CreateEventResultState CreateEvent()
         {
             var profile = SaveNowInputState();
-            var selectedProject = profile.Projects[selectedProfileIndex];
+            var selectedProject = profile.Projects[selectedProjectIndex];
 
             return connpassEventService.CreateEvent(selectedProject, profile.Credential);
         }
 
-        internal void AddNewProfile()
+        internal void AddNewProject()
         {
             var profile = SaveNowInputState();
             var newProject = profile.AddNewProject();
             profileService.Save(profile);
 
-            profileNames.Add(newProject.CopySource.EventTitle);
+            projectNames.Add(newProject.CopySource.EventTitle);
             this.RaisePropertyChanged("DeletableProfile");
-            SelectedProfileIndex = profile.Projects.Count - 1;
+            SelectedProjectIndex = profile.Projects.Count - 1;
         }
 
-        internal void DeleteSelectedtProfile()
+        internal void DeleteSelectedtProject()
         {
             var profile = profileService.Load();
-            profile.Projects.RemoveAt(selectedProfileIndex);
+            profile.Projects.RemoveAt(selectedProjectIndex);
             profileService.Save(profile);
 
-            var nowIndex = selectedProfileIndex;
+            var nowIndex = selectedProjectIndex;
 
-            profileNames.RemoveAt(nowIndex);
-            this.RaisePropertyChanged("DeletableProfile");
+            projectNames.RemoveAt(nowIndex);
+            this.RaisePropertyChanged("DeletableProject");
 
             var nextIndex = nowIndex;
-            if (profileNames.Count == nextIndex) nextIndex--;
-            SelectedProfileIndex = nextIndex;
+            if (projectNames.Count == nextIndex) nextIndex--;
+            SelectedProjectIndex = nextIndex;
         }
 
         internal void Plus7DayOfEventStartAndEndDateTime()
@@ -77,41 +77,41 @@ namespace Presentation.ViewModels
                 .IncrimentVolNo()
                 .Value;
 
-        internal AvaloniaList<string> ProfileNames
+        internal AvaloniaList<string> ProjectNames
         {
             get
             {
-                if (profileNames.Count > 0) return profileNames;
+                if (projectNames.Count > 0) return projectNames;
 
                 var profile = profileService.Load();
                 var names = profile.Projects
                     .Select(project => project.CopySource.EventTitle)
                     .ToList();
-                profileNames = new(names);
+                projectNames = new(names);
 
-                selectedProfileIndex = 0;
-                var selectedProject = profile.Projects[selectedProfileIndex];
+                selectedProjectIndex = 0;
+                var selectedProject = profile.Projects[selectedProjectIndex];
                 this.ReflectFrom(selectedProject);
                 this.ReflectFrom(profile.Credential);
 
-                return profileNames;
+                return projectNames;
             }
         }
 
-        internal int SelectedProfileIndex
+        internal int SelectedProjectIndex
         {
-            get => selectedProfileIndex;
+            get => selectedProjectIndex;
             set
             {
                 if (value == -1)
                 {
-                    this.RaiseAndSetIfChanged(ref selectedProfileIndex, value);
+                    this.RaiseAndSetIfChanged(ref selectedProjectIndex, value);
                     return;
                 }
 
                 var profile = profileService.Load();
 
-                if (selectedProfileIndex != -1)
+                if (selectedProjectIndex != -1)
                 {
                     ReflectNowInputStateTo(profile);
                     profileService.Save(profile);
@@ -120,11 +120,11 @@ namespace Presentation.ViewModels
                 var selectedProject = profile.Projects[value];
                 this.ReflectFrom(selectedProject);
 
-                this.RaiseAndSetIfChanged(ref selectedProfileIndex, value);
+                this.RaiseAndSetIfChanged(ref selectedProjectIndex, value);
             }
         }
 
-        internal bool DeletableProfile { get => ProfileNames.Count > 1; }
+        internal bool DeletableProject { get => ProjectNames.Count > 1; }
 
         private ConnpassProfile SaveNowInputState()
         {
@@ -136,7 +136,7 @@ namespace Presentation.ViewModels
 
         private void ReflectNowInputStateTo(ConnpassProfile profile)
         {
-            var lastSelectedProject = profile.Projects[selectedProfileIndex];
+            var lastSelectedProject = profile.Projects[selectedProjectIndex];
             this.ReflectTo(lastSelectedProject);
             this.ReflectTo(profile.Credential);
         }
