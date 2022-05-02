@@ -88,6 +88,9 @@ namespace Presentation.Views
                 case CreateEventResultState.ログイン失敗:
                     await ShowWarnMessage("Connpassへのログインに失敗しました。\nログイン情報を確認してください。");
                     break;
+                case CreateEventResultState.コピー元のイベントが見つからない:
+                    await ShowWarnMessage("Connpassイベントの作成に失敗しました。\nコピー元のイベントが見つかりません。");
+                    break;
                 default:
                     await ShowWarnMessage("Connpassイベントの作成に失敗しました。");
                     break;
