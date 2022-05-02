@@ -48,7 +48,7 @@ namespace ConnpassAutomator.Application.Service
         private void Login(WebDriver driver, Credential credential)
         {
             driver.InputText("username", credential.UserName);
-            driver.InputText("password", credential.Password);
+            driver.InputText("password", credential.GetPlainTextPassword());
             driver.FindElement(By.Id("login_form")).Submit();
 
             //TODO:さて
