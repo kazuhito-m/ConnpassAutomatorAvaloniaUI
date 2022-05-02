@@ -8,20 +8,22 @@ namespace Presentation.Alert
 {
     static class ThisSystemMessageBox
     {
-        internal static async Task Show(string title, string message, Window? window = null, ButtonEnum button = ButtonEnum.Ok, Icon icon = Icon.Info)
+        internal static async Task Show(string title, string message, Window? owner = null, ButtonEnum button = ButtonEnum.Ok, Icon icon = Icon.Info)
         {
             var param = new MessageBoxStandardParams
             {
                 ButtonDefinitions = button,
                 ContentTitle = title,
                 ContentMessage = message,
-                FontFamily = "Meiryo",
                 WindowStartupLocation = WindowStartupLocation.CenterOwner,
                 Icon = icon
             };
+            if (owner != null) param.FontFamily = owner.FontFamily;
+
             var messageBox = MessageBoxManager.GetMessageBoxStandardWindow(param);
-            if (window == null) await messageBox.Show();
-            else await messageBox.ShowDialog(window);
+
+            if (owner == null) await messageBox.Show();
+            else await messageBox.ShowDialog(owner);
         }
     }
 }
