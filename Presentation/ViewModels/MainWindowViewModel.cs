@@ -46,7 +46,7 @@ namespace Presentation.ViewModels
             SelectedProfileIndex = profile.Projects.Count - 1;
         }
 
-        public void Plus7DayOfEventStartAndEndDateTime()
+        internal void Plus7DayOfEventStartAndEndDateTime()
         {
             if (StartDate.HasValue) StartDate = Add7DayOf(StartDate.Value);
             if (EndDate.HasValue) EndDate = Add7DayOf(EndDate.Value);
@@ -55,12 +55,12 @@ namespace Presentation.ViewModels
         private DateTimeOffset Add7DayOf(DateTimeOffset date)
             => date.AddDays(7);
 
-        public void IncrimentVolNo()
+        internal void IncrimentVolNo()
             => EventTitle = new EventTitle(EventTitle)
                 .IncrimentVolNo()
                 .Value;
 
-        public AvaloniaList<string> ProfileNames
+        internal AvaloniaList<string> ProfileNames
         {
             get
             {
@@ -81,7 +81,7 @@ namespace Presentation.ViewModels
             }
         }
 
-        public int SelectedProfileIndex
+        internal int SelectedProfileIndex
         {
             get => selectedProfileIndex;
             set
@@ -95,7 +95,7 @@ namespace Presentation.ViewModels
             }
         }
 
-        public bool DeletableProfile { get => ProfileNames.Count > 1; }
+        internal bool DeletableProfile { get => ProfileNames.Count > 1; }
 
         private ConnpassProfile SaveNowInputState()
         {
@@ -112,61 +112,61 @@ namespace Presentation.ViewModels
 
         // Simple Get/Set Only Properties
 
-        public string CopyBaseEventTitle
+        internal string CopyBaseEventTitle
         {
             get => copyBaseEventTitle;
             set => this.RaiseAndSetIfChanged(ref copyBaseEventTitle, value);
         }
 
-        public string EventTitle
+        internal string EventTitle
         {
             get => eventTitle;
             set => this.RaiseAndSetIfChanged(ref eventTitle, value);
         }
 
-        public string SubTitle
+        internal string SubTitle
         {
             get => subTitle;
             set => this.RaiseAndSetIfChanged(ref subTitle, value);
         }
 
-        public DateTimeOffset? StartDate
+        internal DateTimeOffset? StartDate
         {
             get => startDate;
             set => this.RaiseAndSetIfChanged(ref startDate, value);
         }
 
-        public TimeSpan? StartTime
+        internal TimeSpan? StartTime
         {
             get => startTime;
             set => this.RaiseAndSetIfChanged(ref startTime, value);
         }
 
-        public DateTimeOffset? EndDate
-        {
+        internal DateTimeOffset? EndDate
+        { 
             get => endDate;
             set => this.RaiseAndSetIfChanged(ref endDate, value);
         }
 
-        public TimeSpan? EndTime
+        internal TimeSpan? EndTime
         {
             get => endTime;
             set => this.RaiseAndSetIfChanged(ref endTime, value);
         }
 
-        public string EventDescription
+        internal string EventDescription
         {
             get => eventDescription;
             set => this.RaiseAndSetIfChanged(ref eventDescription, value);
         }
 
-        public string UserName
+        internal string UserName
         {
             get => userName;
             set => this.RaiseAndSetIfChanged(ref userName, value);
         }
 
-        public string Password
+        internal string Password
         {
             get => password;
             set => this.RaiseAndSetIfChanged(ref password, value);
