@@ -1,4 +1,4 @@
-﻿using ConnpassAutomator.Domain.Model.Profile;
+using ConnpassAutomator.Domain.Model.Profile;
 using System;
 using System.Diagnostics;
 using System.IO;

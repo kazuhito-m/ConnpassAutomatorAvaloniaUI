@@ -1,4 +1,4 @@
-﻿namespace ConnpassAutomator.Domain.Model.Profile
+namespace ConnpassAutomator.Domain.Model.Profile
 {
     public class Project
     {

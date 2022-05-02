@@ -32,7 +32,7 @@
 			<TextBlock Text="イベントプロジェクト" />
 			<ComboBox Items="{Binding ProjectNames}" SelectedIndex="{Binding SelectedProjectIndex}" Width="380">
 			</ComboBox>
-			<Button Click="OnClickDeleteSelectedtProject" IsEnabled="{Binding DeletableProject}">－</Button>
+			<Button Click="OnClickDeleteSelectedtProject" IsEnabled="{Binding DeletableProject}">−</Button>
 			<Button Click="OnClickAddNewProject">＋</Button>
 		</StackPanel>
 

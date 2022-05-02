@@ -1,4 +1,4 @@
-﻿namespace ConnpassAutomator.Domain.Model.Connpass
+namespace ConnpassAutomator.Domain.Model.Connpass
 {
     public class ConnpassUrl
     {

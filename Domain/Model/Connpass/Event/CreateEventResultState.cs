@@ -1,4 +1,4 @@
-﻿namespace ConnpassAutomator.Domain.Model.Connpass.Event
+namespace ConnpassAutomator.Domain.Model.Connpass.Event
 {
     public enum CreateEventResultState
     {

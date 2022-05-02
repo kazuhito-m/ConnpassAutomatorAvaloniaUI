@@ -40,14 +40,14 @@ namespace Presentation.Views
 
         private async Task<bool> Validation()
         {
-            if (await IsBlackInput("copyBaseEventTitle", "ƒRƒs[Œ³ƒCƒxƒ“ƒgƒ^ƒCƒgƒ‹")) return false;
-            if (await IsBlackInput("title", "ƒ^ƒCƒgƒ‹")) return false;
-            if (await IsBlackInput("subTitle", "ƒTƒuƒ^ƒCƒgƒ‹")) return false;
-            if (await IsBlackInput("startDate", "ŠJn“ú•t")) return false;
-            if (await IsBlackInput("startTime", "ŠJn")) return false;
-            if (await IsBlackInput("endDate", "I—¹“ú•t")) return false;
-            if (await IsBlackInput("endTime", "ŠJn")) return false;
-            if (await IsBlackInput("eventDescription", "ƒCƒxƒ“ƒg‚Ìà–¾")) return false;
+            if (await IsBlackInput("copyBaseEventTitle", "ã‚³ãƒ”ãƒ¼å…ƒã‚¤ãƒ™ãƒ³ãƒˆã‚¿ã‚¤ãƒˆãƒ«")) return false;
+            if (await IsBlackInput("title", "ã‚¿ã‚¤ãƒˆãƒ«")) return false;
+            if (await IsBlackInput("subTitle", "ã‚µãƒ–ã‚¿ã‚¤ãƒˆãƒ«")) return false;
+            if (await IsBlackInput("startDate", "é–‹å§‹æ—¥ä»˜")) return false;
+            if (await IsBlackInput("startTime", "é–‹å§‹æ™‚åˆ»")) return false;
+            if (await IsBlackInput("endDate", "çµ‚äº†æ—¥ä»˜")) return false;
+            if (await IsBlackInput("endTime", "é–‹å§‹æ™‚åˆ»")) return false;
+            if (await IsBlackInput("eventDescription", "ã‚¤ãƒ™ãƒ³ãƒˆã®èª¬æ˜")) return false;
 
             return await ValidationCredential();
         }
@@ -57,7 +57,7 @@ namespace Presentation.Views
             var input = this.FindControl<TemplatedControl>(fieldName);
             if (!input.IsBlank()) return false;
 
-            await ShowWarnMessage($"{fieldCaption} ‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B");
+            await ShowWarnMessage($"{fieldCaption} ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚");
             input!.Focus();
 
             return true;
@@ -69,7 +69,7 @@ namespace Presentation.Views
             if (vm.UserName.Trim().Length > 0
                 && vm.Password.Trim().Length > 0) return true;
 
-            await ShowWarnMessage("ƒƒOƒCƒ“î•ñ‚ª–¢İ’è‚Å‚·B");
+            await ShowWarnMessage("ãƒ­ã‚°ã‚¤ãƒ³æƒ…å ±ãŒæœªè¨­å®šã§ã™ã€‚");
 
             return await ShowEditCredentialWindow();
         }
@@ -78,14 +78,14 @@ namespace Presentation.Views
         {
             switch (result)
             {
-                case CreateEventResultState.¬Œ÷:
-                    await ShowSuccessMessage("ConnpassƒCƒxƒ“ƒg‚Ìì¬‚ªŠ®—¹‚µ‚Ü‚µ‚½B");
+                case CreateEventResultState.æˆåŠŸ:
+                    await ShowSuccessMessage("Connpassã‚¤ãƒ™ãƒ³ãƒˆã®ä½œæˆãŒå®Œäº†ã—ã¾ã—ãŸã€‚");
                     break;
-                case CreateEventResultState.ƒƒOƒCƒ“¸”s:
-                    await ShowWarnMessage("Connpass‚Ö‚ÌƒƒOƒCƒ“‚É¸”s‚µ‚Ü‚µ‚½B\nƒƒOƒCƒ“î•ñ‚ğŠm”F‚µ‚Ä‚­‚¾‚³‚¢B");
+                case CreateEventResultState.ãƒ­ã‚°ã‚¤ãƒ³å¤±æ•—:
+                    await ShowWarnMessage("Connpassã¸ã®ãƒ­ã‚°ã‚¤ãƒ³ã«å¤±æ•—ã—ã¾ã—ãŸã€‚\nãƒ­ã‚°ã‚¤ãƒ³æƒ…å ±ã‚’ç¢ºèªã—ã¦ãã ã•ã„ã€‚");
                     break;
                 default:
-                    await ShowWarnMessage("ConnpassƒCƒxƒ“ƒg‚Ìì¬‚É¸”s‚µ‚Ü‚µ‚½B");
+                    await ShowWarnMessage("Connpassã‚¤ãƒ™ãƒ³ãƒˆã®ä½œæˆã«å¤±æ•—ã—ã¾ã—ãŸã€‚");
                     break;
             }
         }
@@ -130,7 +130,7 @@ namespace Presentation.Views
 
         private async void OnButtonClick(object sender, RoutedEventArgs e)
         {
-            await ThisSystemMessageBox.Show("ƒ^ƒCƒgƒ‹", "ƒƒbƒZ[ƒWƒ{ƒbƒNƒXo‚¹‚é‚æI", this);
+            await ThisSystemMessageBox.Show("ã‚¿ã‚¤ãƒˆãƒ«", "ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒœãƒƒã‚¯ã‚¹å‡ºã›ã‚‹ã‚ˆï¼", this);
         }
 
         private void OnClosed(object? sender, EventArgs args)

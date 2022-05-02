@@ -41,10 +41,10 @@ namespace Presentation
                 });
 
         /// <summary>
-        /// AvaloniaUI�̃f�U�C�i�̂��߂̃��\�b�h�B
+        /// AvaloniaUIのデザイナのためのメソッド。
         /// <p/>
-        /// �E�B�U�[�h�Ŏ�����������A�f�U�C�i���uProgram�N���X�ɂ��̃��\�b�h�����邱�Ɓv�����҂��Ă���B
-        /// ���A�{�v���W�F�N�g�ł́A
+        /// ウィザードで自動生成され、デザイナが「Programクラスにこのメソッドがあること」を期待している。
+        /// が、本プロジェクトでは、
         /// </summary>
         /// <returns></returns>
         public static AppBuilder BuildAvaloniaApp()
