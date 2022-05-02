@@ -1,7 +1,6 @@
 using ConnpassAutomator.Application.Service;
 using ConnpassAutomator.Domain.Model.Connpass.Event;
 using ConnpassAutomator.Domain.Model.Profile;
-using Presentation.Alert;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -23,6 +22,7 @@ namespace Presentation.ViewModels
         private string userName = "";
         private string password = "";
 
+        private List<string> profileNames = new();
         private int selectedProfileIndex = 0;
 
         private readonly ConnpassEventService connpassEventService;
@@ -45,29 +45,28 @@ namespace Presentation.ViewModels
         private DateTimeOffset Add7DayOf(DateTimeOffset date)
             => date.AddDays(7);
 
-        public void IncrimentVolNo() 
+        public void IncrimentVolNo()
             => EventTitle = new EventTitle(EventTitle)
                 .IncrimentVolNo()
                 .Value;
 
-        public List<string> FindProjectNames
+        public List<string> ProfileNames
         {
             get
             {
+                if (profileNames.Count > 0) return profileNames;
+
                 var profile = profileService.Load();
-                var names = profile.Projects
+                profileNames = profile.Projects
                     .Select(project => project.CopySource.EventTitle)
                     .ToList();
 
-                if (names.Count > 0)
-                {
-                    selectedProfileIndex = 0;
-                    var selectedProject = profile.Projects[selectedProfileIndex];
-                    this.ReflectFrom(selectedProject);
-                    this.ReflectFrom(profile.Credential);
-                }
+                selectedProfileIndex = 0;
+                var selectedProject = profile.Projects[selectedProfileIndex];
+                this.ReflectFrom(selectedProject);
+                this.ReflectFrom(profile.Credential);
 
-                return names;
+                return profileNames;
             }
         }
 
@@ -84,6 +83,8 @@ namespace Presentation.ViewModels
                 this.RaiseAndSetIfChanged(ref selectedProfileIndex, value);
             }
         }
+
+        public bool DeletableProfile { get => ProfileNames.Count > 1; }
 
         private ConnpassProfile SaveNowInputState()
         {
