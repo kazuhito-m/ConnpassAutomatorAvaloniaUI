@@ -133,6 +133,12 @@ namespace Presentation.Views
             await ThisSystemMessageBox.Show("タイトル", "メッセージボックス出せるよ！", this);
         }
 
+        private async void OnDoubleTappedEndDateTime(object sender, RoutedEventArgs e)
+        {
+            var window = new DebugWindow();
+            await window.ShowDialog<bool>(this);
+        }
+
         private void OnClosed(object? sender, EventArgs args)
             => ViewModel().Save();
 

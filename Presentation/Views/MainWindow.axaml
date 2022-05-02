@@ -96,7 +96,7 @@
 				</StackPanel>
 
 				<StackPanel>
-					<TextBlock Text="終了時間" />
+					<TextBlock Text="終了時間" DoubleTapped="OnDoubleTappedEndDateTime"/>
 					<StackPanel Orientation="Horizontal" Spacing="8">
 						<DatePicker x:Name="endDate" SelectedDate="{Binding EndDate}"/>
 						<TimePicker x:Name="endTime" SelectedTime="{Binding EndTime}"/>
