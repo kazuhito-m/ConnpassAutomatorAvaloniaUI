@@ -3,12 +3,12 @@
         xmlns:vm="using:Presentation.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="620"
+        mc:Ignorable="d" d:DesignWidth="650" d:DesignHeight="640"
         x:Class="Presentation.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="ConnpassAutomatorAvaloniaUI"
 		SizeToContent="Manual"
-		Width="600" Height="620"
+		Width="650" Height="640"
 		WindowStartupLocation="CenterScreen"
 		CanResize="false">
 
@@ -22,7 +22,7 @@
 			<Setter Property="HorizontalAlignment" Value="Left"/>
 		</Style>
 		<Style Selector="TextBox">
-			<Setter Property="Width" Value="500"/>
+			<Setter Property="Width" Value="540"/>
 		</Style>
 		<Style Selector="Button">
 			<Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -42,7 +42,7 @@
 				</Style>
 			</StackPanel.Styles>
 			<TextBlock Text="イベントプロジェクト" />
-			<ComboBox Items="{Binding ProjectNames}" SelectedIndex="{Binding SelectedProjectIndex}" Width="380">
+			<ComboBox Items="{Binding ProjectNames}" SelectedIndex="{Binding SelectedProjectIndex}" Width="395">
 			</ComboBox>
 			<Button Click="OnClickDeleteSelectedtProject" IsEnabled="{Binding DeletableProject}">-</Button>
 			<Button Click="OnClickAddNewProject">+</Button>
@@ -53,7 +53,7 @@
 			BorderThickness="1"
 			CornerRadius="3"
 			Padding="8"
-			Width="570">
+			Width="620">
 
 			<StackPanel Spacing="8">
 
