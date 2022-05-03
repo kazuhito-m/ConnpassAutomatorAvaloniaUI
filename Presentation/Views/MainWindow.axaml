@@ -87,7 +87,7 @@
 				<StackPanel>
 					<StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="8">
 						<TextBlock Text="開始時間" />
-						<Button Width="100" VerticalContentAlignment="Bottom" Command="{Binding Plus7DayOfEventStartAndEndDateTime}">+7Day</Button>
+						<Button Command="{Binding Plus7DayOfEventStartAndEndDateTime}">+7Day</Button>
 					</StackPanel>
 					<StackPanel Orientation="Horizontal" Spacing="8">
 						<DatePicker x:Name="startDate" SelectedDate="{Binding StartDate}"/>
