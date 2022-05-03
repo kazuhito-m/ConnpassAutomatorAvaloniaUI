@@ -14,9 +14,6 @@
 		<AvaloniaResource Include="Assets\**" />
 		<None Remove=".gitignore" />
 	</ItemGroup>
-	<ItemGroup>
-		<EmbeddedResource Include="Assets\Fonts\NotoSansCJKjp-Regular.ttf" />
-	</ItemGroup>
 
 	<ItemGroup>
 		<!--This helps with theme dll-s trimming.
