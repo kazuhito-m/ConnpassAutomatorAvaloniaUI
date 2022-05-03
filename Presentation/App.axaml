@@ -9,8 +9,7 @@
 	<Application.Styles>
 		<FluentTheme Mode="Light"/>
 		<Style Selector="Window">
-			<Setter Property="FontFamily" Value="avares://Presentation/Assets/Fonts#Noto Sans CJK JP"/>
-			<Setter Property="FontWeight" Value="SemiLight"/>
+			<Setter Property="FontFamily" Value="avares://Presentation/Assets/Fonts#Mplus 1p"/>
 		</Style>
 	</Application.Styles>
 </Application>
