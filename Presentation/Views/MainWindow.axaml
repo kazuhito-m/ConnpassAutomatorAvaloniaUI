@@ -108,6 +108,7 @@
 						<TextBlock Text="イベントの説明" />
 						<TextBox x:Name="eventDescription"
 							AcceptsReturn="True" TextWrapping="Wrap" Height="120"
+							FontFamily="resm:Presentation.Assets.Fonts?assembly=Presentation#Noto Sans CJK JP"
 							Text="{Binding EventDescription}"/>
 					</StackPanel>
 

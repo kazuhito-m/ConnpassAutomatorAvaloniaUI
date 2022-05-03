@@ -12,7 +12,11 @@
 
 	<ItemGroup>
 		<AvaloniaResource Include="Assets\**" />
+		<AvaloniaResource Include="Assets\Fonts\*" />
 		<None Remove=".gitignore" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Assets\Fonts\NotoSansCJKjp-Regular.ttf" />
 	</ItemGroup>
 
 	<ItemGroup>
