@@ -79,7 +79,26 @@
 				</StackPanel>
 
 				<StackPanel>
-					<TextBlock Text="サブタイトル" />
+					<TextBlock Text="サブタイトル"
+						FontFamily="avares://Presentation/Assets/Fonts#Noto Sans CJK JP"
+						FontSize="20"
+						FontWeight="Thin"
+					/>
+					<TextBlock Text="サブタイトル"
+						FontFamily="avares://Presentation/Assets/Fonts#Noto Sans CJK JP"
+						FontSize="20"
+						FontWeight="Medium"
+					/>
+					<TextBlock Text="サブタイトル" 
+						FontFamily="avares://Presentation/Assets/Fonts#Noto Sans CJK JP"
+						FontSize="20"
+						FontWeight="Regular"
+					/>
+					<TextBlock Text="サブタイトル"
+						FontFamily="avares://Presentation/Assets/Fonts#Noto Sans CJK JP"
+						FontSize="20"
+						FontWeight="Bold"
+					/>
 					<TextBox x:Name="subTitle"
 						Text="{Binding SubTitle}"/>
 				</StackPanel>
@@ -105,7 +124,9 @@
 
 				<StackPanel Orientation="Horizontal" Spacing="8">
 					<StackPanel>
-						<TextBlock Text="イベントの説明" />
+						<TextBlock Text="イベントの説明"
+							FontFamily="avares://Presentation/Assets/Fonts#Noto Sans CJK JP"
+						/>
 						<TextBox x:Name="eventDescription"
 							AcceptsReturn="True" TextWrapping="Wrap" Height="120"
 							FontFamily="avares://Presentation/Assets/Fonts#Noto Sans CJK JP"
