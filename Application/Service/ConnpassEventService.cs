@@ -30,11 +30,14 @@ namespace ConnpassAutomator.Application.Service
 
         private CreateEventResultState DoPageOperation(WebDriver driver, OpenQA.Selenium.Support.UI.WebDriverWait driverWait, Project project, Credential credential)
         {
+            CreateEventResultState result = CreateEventResultState.成功;
+
             if (!TryWith(() => Login(driver, credential)))
                 return CreateEventResultState.ログイン失敗;
 
-            if (!TryWith(() => FindBaseEventAndCopy(driver, project)))
+            if (!TryWith(() => result = FindBaseEventAndCopy(driver, project)))
                 return CreateEventResultState.失敗;
+            if (result != CreateEventResultState.成功) return result;
 
             if (!TryWith(() => EditEvent(driver, project.Changeset)))
                 return CreateEventResultState.失敗;
@@ -58,9 +61,11 @@ namespace ConnpassAutomator.Application.Service
                 throw new Exception("ログイン後画面のタイトルが見つからない。");
         }
 
-        private void FindBaseEventAndCopy(WebDriver driver, Project project)
+        private CreateEventResultState FindBaseEventAndCopy(WebDriver driver, Project project)
         {
             var elements = driver.FindElements(By.ClassName("event_list"));
+
+            IWebElement copyIconElement = null;
             foreach (var element in elements)
             {
                 var status = element.FindElement(By.ClassName("label_status_event")).Text;
@@ -68,11 +73,17 @@ namespace ConnpassAutomator.Application.Service
                 var title = element.FindElement(By.CssSelector(".title > a")).Text;
                 if (title.Contains(project.CopySource.EventTitle) && status == "終了")
                 {
-                    element.FindElement(By.ClassName("icon_gray_copy")).Click();
+                    copyIconElement = element.FindElement(By.ClassName("icon_gray_copy"));
                     break;
                 }
             }
+
+            if (copyIconElement == null)
+                return CreateEventResultState.コピー元のイベントが見つからない;
+
             //コピー作成。
+            copyIconElement.Click();
+
             var alert = driver.SwitchTo().Alert();
             alert.Accept();
 
@@ -86,6 +97,8 @@ namespace ConnpassAutomator.Application.Service
 
             if (driver.GetClassTextOf("public_status_area") != "下書き中")
                 throw new Exception("イベントコピー後の「下書き中」が見つからない。");
+
+            return CreateEventResultState.成功;
         }
 
         private void EditEvent(WebDriver driver, Changeset changeset)
