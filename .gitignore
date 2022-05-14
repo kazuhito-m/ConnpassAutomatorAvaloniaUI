@@ -379,3 +379,6 @@ InteropTests/NativeTests/out
 # This Application difine files.
 profile.json
 
+# vs code
+.vscode/
+
