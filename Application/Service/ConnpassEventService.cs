@@ -15,15 +15,12 @@ namespace ConnpassAutomator.Application.Service
 
         public CreateEventResultState CreateEvent(Project project, Credential credential)
         {
-            var driver = seleniumRepository.CreateWebDriver(120);
+            using var driver = seleniumRepository.CreateWebDriver(120);
             driver.Url = ConnpassUrl.eventManagementUrl();
 
             var driverWait = seleniumRepository.CreateWait(driver, 60, 1);
 
             var result = DoPageOperation(driver, driverWait, project, credential);
-
-            driver.Close();
-            driver.Dispose();
 
             return result;
         }
